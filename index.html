@@ -1,0 +1,3674 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perbadanan Pengurusan Astana Damansara — Vendor Management System</title>
+  <meta name="description" content="Vendor registration, SSM/CIDB/MOF licence compliance tracking, Schedule of Rates catalog and tender rate comparator for Perbadanan Pengurusan Astana Damansara.">
+  <meta name="color-scheme" content="light">
+
+  <!-- Inline SVG favicon (no external asset needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23161616'/%3E%3Crect x='6' y='9' width='20' height='3' fill='%230f62fe'/%3E%3Crect x='6' y='15' width='14' height='3' fill='%23f4f4f4'/%3E%3Crect x='6' y='21' width='17' height='3' fill='%23f4f4f4'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: IBM Plex Sans & IBM Plex Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons (all usage is guarded by `if (window.lucide)`, so the page
+       still works if the CDN is blocked) -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js" defer></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Carbon System) */
+      --background: #ffffff;
+      --surface-container-low: #f4f4f4;
+      --surface-container: #f4f4f4;
+      --surface-container-high: #e0e0e0;
+      --surface-card: #ffffff;
+      --surface-accent: #f8f9fa;
+
+      /* Ink */
+      --on-surface: #161616;
+      --on-surface-variant: #525252;
+      --on-surface-subtle: #6f6f6f;
+
+      /* Rules */
+      --outline: #8d8d8d;
+      --outline-variant: #e0e0e0;
+
+      /* Accents & Signals */
+      --primary: #0f62fe;
+      --on-primary: #ffffff;
+      --primary-container: #d0e2ff;
+      --on-primary-container: #161616;
+      --primary-hover: #0353e9;
+      --secondary: #6f6f6f;
+      --tertiary: #198038;
+      --error: #da1e28;
+      --on-error: #ffffff;
+
+      /* Semantic status tokens */
+      --positive: #198038;
+      --positive-container: #defbe6;
+      --warning: #b28600;
+      --warning-container: #fef3d6;
+      --error-container: #ffd7d9;
+      --info: #0043ce;
+      --info-container: #edf5ff;
+
+      /* Data visual tokens */
+      --data-1: #0f62fe;
+      --data-2: #6929c4;
+      --data-3: #005d5d;
+      --data-4: #9f1853;
+      --data-context: #8d8d8d;
+
+      /* Typography */
+      --font-headline: 'IBM Plex Sans', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+      --font-label: 'IBM Plex Mono', monospace;
+
+      /* Shapes & Metrics */
+      --rounded: 0.125rem;
+      --rounded-lg: 0.25rem;
+      --rounded-full: 0.75rem;
+
+      /* Effects */
+      --shadow-1: 0 2px 6px rgb(0 0 0 / 0.1);
+      --shadow-2: 0 4px 12px rgb(0 0 0 / 0.12);
+      --shadow-drawer: -4px 0 20px rgb(0 0 0 / 0.15);
+      --rule: 1px solid var(--outline-variant);
+      --field-rule: 1px solid var(--outline);
+      --indicator: 2px solid var(--primary);
+      --focus: var(--primary);
+
+      /* Type scale for Dashboard / Tool */
+      --display-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.15rem);
+      --headline-size: clamp(1.2rem, 1.05rem + 0.5vw, 1.45rem);
+      --subhead-size: clamp(1rem, 0.95rem + 0.2vw, 1.15rem);
+      --body-size: 0.9375rem;
+      --label-size: 0.75rem;
+
+      /* Spacing Scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2rem;
+      --space-2xl: 3.5rem;
+      --space-3xl: 5rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { overflow-x: clip; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Accessibility Focus Ring */
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    /* Structural Shell */
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: var(--background);
+    }
+
+    .top-header {
+      background-color: var(--on-surface);
+      color: var(--background);
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .brand-block h1 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      color: #ffffff;
+      text-transform: uppercase;
+      font-family: var(--font-headline);
+    }
+
+    .brand-subtitle {
+      margin: 0;
+      font-size: 0.75rem;
+      font-family: var(--font-label);
+      color: #c6c6c6;
+      letter-spacing: 0.08em;
+    }
+
+    .system-status-pills {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 8px;
+      background-color: #262626;
+      border: 1px solid #393939;
+      color: #f4f4f4;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #42be65;
+    }
+
+    /* Primary Navigation Bar */
+    .nav-bar {
+      background-color: var(--surface-container);
+      border-bottom: var(--rule);
+      position: sticky;
+      top: 0;
+      z-index: 30;
+    }
+
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      overflow-x: auto;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: var(--space-xs);
+    }
+
+    .nav-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: var(--space-md) var(--space-md);
+      font-family: var(--font-headline);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap;
+      transition: color var(--dur-micro) ease, border-color var(--dur-micro) ease;
+    }
+
+    .nav-btn:hover {
+      color: var(--on-surface);
+      background-color: var(--surface-container-high);
+    }
+
+    .nav-btn.active {
+      color: var(--primary);
+      font-weight: 600;
+      border-bottom: var(--indicator);
+      background-color: var(--background);
+    }
+
+    .badge-count {
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+
+    .nav-btn.active .badge-count {
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* Main Container */
+    .main-content {
+      max-width: 1440px;
+      width: 100%;
+      margin: 0 auto;
+      padding: var(--space-lg);
+      flex: 1;
+    }
+
+    /* Views */
+    .tab-view { display: none; }
+    .tab-view.active { display: block; }
+
+    /* Carbon Typography Styles */
+    .headline {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 300;
+      line-height: 1.25;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+
+    .headline strong { font-weight: 600; }
+
+    .subhead-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-md) 0;
+      max-width: 80ch;
+    }
+
+    .label-mono {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+    }
+
+    /* Flat Gray Layers (Carbon Principle) */
+    .layer-panel {
+      background: var(--surface-container);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      border-left: 3px solid transparent;
+    }
+
+    .layer-panel.highlight-blue { border-left-color: var(--primary); }
+
+    .layer-panel.highlight-warning {
+      border-left-color: var(--warning);
+      background-color: var(--warning-container);
+    }
+
+    .layer-panel.highlight-error {
+      border-left-color: var(--error);
+      background-color: var(--error-container);
+    }
+
+    /* KPI Summary Tiles */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+
+    .kpi-tile {
+      background-color: var(--surface-container);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 108px;
+      position: relative;
+    }
+
+    .kpi-tile.featured { border-bottom: var(--indicator); }
+
+    .kpi-label {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+      margin-bottom: var(--space-xs);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .kpi-value {
+      font-family: var(--font-label);
+      font-size: 2.1rem;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+    }
+
+    .kpi-subtext {
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    /* Alert Banner Strip */
+    .compliance-alert-banner {
+      background-color: var(--warning-container);
+      border-left: 4px solid var(--warning);
+      padding: var(--space-md);
+      margin-bottom: var(--space-lg);
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+      color: var(--on-surface);
+    }
+
+    .alert-icon-box {
+      color: var(--warning);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .alert-content { flex: 1; }
+
+    .alert-title {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin: 0 0 var(--space-xs) 0;
+    }
+
+    .alert-desc {
+      font-size: 0.8125rem;
+      margin: 0;
+      color: #4a3800;
+    }
+
+    .alert-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-sm);
+    }
+
+    .alert-chip {
+      background-color: #ffffff;
+      border: 1px solid #d4a300;
+      padding: 3px 8px;
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      color: #3d2f00;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .alert-chip:hover { background-color: #fff9e6; }
+
+    /* Filter & Controls Toolbar */
+    .controls-toolbar {
+      background-color: var(--surface-container);
+      padding: var(--space-md);
+      margin-bottom: var(--space-md);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: var(--space-md);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      flex: 1 1 200px;
+    }
+
+    .form-group.small { flex: 0 1 160px; }
+    .form-group.auto { flex: 0 0 auto; }
+
+    .input-label {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+      font-weight: 500;
+    }
+
+    .carbon-input,
+    .carbon-select {
+      height: 40px;
+      background-color: var(--background);
+      border: none;
+      border-bottom: var(--field-rule);
+      padding: 0 var(--space-sm);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      color: var(--on-surface);
+      border-radius: 0;
+      width: 100%;
+      outline: none;
+      transition: border-color var(--dur-micro) ease;
+    }
+
+    .carbon-input:focus,
+    .carbon-select:focus { border-bottom: 2px solid var(--primary); }
+
+    .carbon-btn {
+      height: 40px;
+      padding: 0 var(--space-lg);
+      font-family: var(--font-headline);
+      font-size: 0.875rem;
+      font-weight: 400;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 0;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: background-color var(--dur-micro) ease, border-color var(--dur-micro) ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+
+    .btn-primary:hover { background-color: var(--primary-hover); }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .btn-secondary:hover { background-color: var(--surface-container-high); }
+
+    .btn-ghost {
+      background-color: transparent;
+      color: var(--on-surface);
+      border-color: var(--outline-variant);
+    }
+
+    .btn-ghost:hover { background-color: var(--surface-container-high); }
+
+    .btn-sm {
+      height: 32px;
+      padding: 0 var(--space-md);
+      font-size: 0.8125rem;
+    }
+
+    .btn-danger {
+      background-color: transparent;
+      color: var(--error);
+      border-color: var(--error);
+    }
+
+    .btn-danger:hover { background-color: var(--error-container); }
+
+    /* View Switcher */
+    .view-toggle {
+      display: inline-flex;
+      border: 1px solid var(--outline-variant);
+      background-color: var(--background);
+    }
+
+    .toggle-opt {
+      height: 38px;
+      padding: 0 var(--space-md);
+      background: transparent;
+      border: none;
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      cursor: pointer;
+      color: var(--on-surface-variant);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toggle-opt.active {
+      background-color: var(--on-surface);
+      color: #ffffff;
+    }
+
+    /* Carbon Table Styles */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      background-color: var(--background);
+      border: var(--rule);
+      margin-bottom: var(--space-lg);
+    }
+
+    .carbon-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.875rem;
+    }
+
+    .carbon-table th {
+      background-color: var(--surface-container);
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: 2px solid var(--outline-variant);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .carbon-table th.sortable { cursor: pointer; user-select: none; }
+
+    .carbon-table th.sortable:hover {
+      color: var(--on-surface);
+      background-color: var(--surface-container-high);
+    }
+
+    .carbon-table td {
+      padding: var(--space-sm) var(--space-md);
+      border-bottom: var(--rule);
+      vertical-align: middle;
+    }
+
+    .carbon-table tbody tr:nth-child(even) { background-color: var(--surface-container-low); }
+    .carbon-table tbody tr:hover { background-color: #edf5ff; }
+
+    .carbon-table td.mono-cell {
+      font-family: var(--font-label);
+      font-size: 0.8125rem;
+    }
+
+    .carbon-table td.num-cell {
+      font-family: var(--font-label);
+      text-align: right;
+    }
+
+    /* Compliance Badges */
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 8px;
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-radius: var(--rounded-full);
+      white-space: nowrap;
+      font-weight: 600;
+    }
+
+    .badge-pill.status-compliant {
+      background-color: var(--positive-container);
+      color: #0e5c24;
+      border: 1px solid #a7f0ba;
+    }
+
+    .badge-pill.status-expiring {
+      background-color: var(--warning-container);
+      color: #684e00;
+      border: 1px solid #ffd466;
+    }
+
+    .badge-pill.status-expired {
+      background-color: var(--error-container);
+      color: #990000;
+      border: 1px solid #ffb3b8;
+    }
+
+    .badge-pill.status-review {
+      background-color: var(--primary-container);
+      color: #002d9c;
+      border: 1px solid #a6c8ff;
+    }
+
+    .cidb-grade-tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      background-color: var(--surface-container-high);
+      color: var(--on-surface);
+      border: 1px solid var(--outline-variant);
+      font-weight: 600;
+    }
+
+    .mof-code-tag {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: 0.68rem;
+      padding: 1px 5px;
+      background-color: #e8daff;
+      color: #491d8b;
+      margin-right: 2px;
+    }
+
+    /* Cards Grid View */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+
+    .contractor-card {
+      background-color: var(--background);
+      border: var(--rule);
+      border-left: 4px solid var(--outline);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color var(--dur-micro) ease;
+    }
+
+    .contractor-card:hover { border-color: var(--outline); }
+    .contractor-card.border-compliant { border-left-color: var(--positive); }
+    .contractor-card.border-expiring { border-left-color: var(--warning); }
+    .contractor-card.border-expired { border-left-color: var(--error); }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+
+    .card-company-name {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0 0 2px 0;
+      color: var(--on-surface);
+    }
+
+    .card-ssm-no {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    .card-meta-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xs);
+      font-size: 0.8125rem;
+      margin: var(--space-sm) 0;
+      padding: var(--space-xs) 0;
+      border-top: var(--rule);
+      border-bottom: var(--rule);
+    }
+
+    .card-meta-item .meta-k {
+      font-family: var(--font-label);
+      font-size: 0.68rem;
+      color: var(--on-surface-variant);
+      text-transform: uppercase;
+    }
+
+    .card-meta-item .meta-v {
+      font-weight: 500;
+      color: var(--on-surface);
+    }
+
+    .card-history-strip {
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+      margin: var(--space-xs) 0 var(--space-sm) 0;
+      line-height: 1.35;
+    }
+
+    .card-footer-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-xs);
+      margin-top: var(--space-sm);
+    }
+
+    /* Modal & Drawer Shell */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(22, 22, 22, 0.6);
+      backdrop-filter: blur(2px);
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal-box {
+      background-color: var(--background);
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-2);
+      border: var(--rule);
+    }
+
+    .modal-header {
+      padding: var(--space-md) var(--space-lg);
+      border-bottom: var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--surface-container);
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .modal-body {
+      padding: var(--space-lg);
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .modal-footer {
+      padding: var(--space-md) var(--space-lg);
+      border-top: var(--rule);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      background-color: var(--surface-container-low);
+    }
+
+    /* Drawer Component */
+    .drawer-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(22, 22, 22, 0.5);
+      z-index: 90;
+      display: none;
+      justify-content: flex-end;
+    }
+
+    .drawer-overlay.active { display: flex; }
+
+    .drawer-panel {
+      width: 100%;
+      max-width: 680px;
+      height: 100%;
+      background-color: var(--background);
+      box-shadow: var(--shadow-drawer);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .drawer-header {
+      padding: var(--space-md) var(--space-lg);
+      background-color: var(--surface-container);
+      border-bottom: var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .drawer-body {
+      padding: var(--space-lg);
+      flex: 1;
+    }
+
+    /* Registration Form Sections */
+    .form-section-card {
+      background-color: var(--surface-container);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+
+    .form-section-head {
+      border-bottom: var(--rule);
+      padding-bottom: var(--space-xs);
+      margin-bottom: var(--space-md);
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+
+    .form-section-title {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+      color: var(--on-surface);
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .field-hint {
+      font-size: 0.72rem;
+      color: var(--on-surface-variant);
+      margin-top: 2px;
+    }
+
+    /* Document Upload Simulator Box */
+    .upload-zone {
+      border: 2px dashed var(--outline);
+      background-color: var(--background);
+      padding: var(--space-lg);
+      text-align: center;
+      cursor: pointer;
+      transition: border-color var(--dur-micro) ease;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--primary);
+      background-color: #f8fbff;
+    }
+
+    .uploaded-doc-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+    }
+
+    .uploaded-doc-item {
+      background-color: var(--background);
+      border: var(--rule);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      gap: var(--space-sm);
+    }
+
+    .doc-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* Schedule of Rates (SOR) Table & Layout */
+    .sor-trade-header {
+      background-color: var(--on-surface);
+      color: #ffffff;
+      padding: var(--space-sm) var(--space-md);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .benchmark-badge {
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      background-color: var(--primary-container);
+      color: var(--on-primary-container);
+      font-weight: 500;
+    }
+
+    /* Rate Comparator / Estimator Layout */
+    .estimator-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+
+    @media (max-width: 1024px) {
+      .estimator-layout { grid-template-columns: 1fr; }
+    }
+
+    .comparison-card {
+      background-color: var(--surface-container);
+      padding: var(--space-md);
+      border-top: 3px solid var(--outline);
+    }
+
+    .comparison-card.recommended {
+      border-top-color: var(--primary);
+      background-color: #f8fbff;
+    }
+
+    .comparison-contractor-name {
+      font-family: var(--font-headline);
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+
+    .comparison-price-large {
+      font-family: var(--font-label);
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: var(--on-surface);
+      margin: var(--space-xs) 0;
+    }
+
+    .comparison-metric-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8125rem;
+      padding: 4px 0;
+      border-bottom: var(--rule);
+      gap: var(--space-sm);
+    }
+
+    .comparison-metric-row:last-child { border-bottom: none; }
+
+    .rec-badge-flag {
+      background-color: var(--primary);
+      color: #ffffff;
+      font-family: var(--font-label);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      display: inline-block;
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Verification Status Pill */
+    .verify-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--font-label);
+      font-size: 0.68rem;
+      padding: 2px 6px;
+    }
+
+    .verify-pill.valid {
+      background-color: var(--positive-container);
+      color: #0e5c24;
+    }
+
+    .verify-pill.warn {
+      background-color: var(--warning-container);
+      color: #684e00;
+    }
+
+    .verify-pill.danger {
+      background-color: var(--error-container);
+      color: #990000;
+    }
+
+    /* Print & Notice View */
+    .notice-preview-box {
+      background-color: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-lg);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .notice-header-block {
+      border-bottom: 2px solid var(--on-surface);
+      padding-bottom: var(--space-md);
+      margin-bottom: var(--space-md);
+    }
+
+    /* Footer */
+    .system-footer {
+      background-color: var(--surface-container);
+      border-top: var(--rule);
+      padding: var(--space-md) var(--space-lg);
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      color: var(--on-surface-variant);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+
+    <!-- Top Institutional Masthead -->
+    <header class="top-header">
+      <div class="header-inner">
+        <div class="brand-block">
+          <h1>Perbadanan Pengurusan Astana Damansara</h1>
+          <p class="brand-subtitle">Contractor Governance &amp; Schedule of Rates Management Portal (PJ, Selangor)</p>
+        </div>
+        <div class="system-status-pills">
+          <div class="status-tag">
+            <span class="status-dot"></span>
+            <span id="hdr-system-date">SYSTEM DATE: —</span>
+          </div>
+          <div class="status-tag">
+            <span>CIDB ACT 520 / SSM COMPLIANCE MONITORED</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="nav-bar" aria-label="Main system modules">
+      <div class="nav-inner">
+        <div class="nav-tabs" role="tablist">
+          <button class="nav-btn active" id="tab-btn-dashboard" onclick="switchTab('dashboard')" role="tab" aria-selected="true">
+            <i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i>
+            <span>Vendor Directory &amp; Compliance</span>
+            <span class="badge-count" id="nav-count-vendors">12</span>
+          </button>
+          <button class="nav-btn" id="tab-btn-registration" onclick="switchTab('registration')" role="tab" aria-selected="false">
+            <i data-lucide="user-plus" style="width: 16px; height: 16px;"></i>
+            <span>Vendor Registration</span>
+          </button>
+          <button class="nav-btn" id="tab-btn-sor" onclick="switchTab('sor')" role="tab" aria-selected="false">
+            <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+            <span>Schedule of Rates (SOR)</span>
+            <span class="badge-count" id="nav-count-sor">16</span>
+          </button>
+          <button class="nav-btn" id="tab-btn-estimator" onclick="switchTab('estimator')" role="tab" aria-selected="false">
+            <i data-lucide="calculator" style="width: 16px; height: 16px;"></i>
+            <span>Rate Comparator &amp; Estimator</span>
+          </button>
+        </div>
+
+        <div class="nav-actions">
+          <button class="carbon-btn btn-ghost btn-sm" onclick="exportVendorsCSV()" title="Export current vendor roster to CSV file">
+            <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+            <span>Export Roster</span>
+          </button>
+          <button class="carbon-btn btn-ghost btn-sm" onclick="resetToAstanaDefaults()" title="Reset data back to Astana Damansara verified baseline">
+            <i data-lucide="refresh-cw" style="width: 14px; height: 14px;"></i>
+            <span>Reset Baseline</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Canvas -->
+    <main class="main-content">
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: VENDOR MANAGEMENT & COMPLIANCE     -->
+      <!-- ========================================== -->
+      <section id="view-dashboard" class="tab-view active">
+
+        <div style="margin-bottom: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-sm);">
+          <h2 class="headline">Contractor Directory &amp; <strong>Compliance Status</strong></h2>
+          <p class="subhead-desc">
+            Statutory tracking of SSM company registration, CIDB Malaysia grades, MOF treasury field codes, and mandatory RM1,000,000 public liability and workmen's compensation insurance policies for Condominium Astana Damansara.
+          </p>
+        </div>
+
+        <!-- Top-Line KPI Tiles -->
+        <div class="kpi-grid">
+          <div class="kpi-tile featured">
+            <div class="kpi-label">
+              <span>Total Enrolled Contractors</span>
+              <i data-lucide="building-2" style="width: 14px; height: 14px;"></i>
+            </div>
+            <div class="kpi-value" id="kpi-total-vendors">12</div>
+            <p class="kpi-subtext">Active Astana maintenance vendor pool</p>
+          </div>
+
+          <div class="kpi-tile">
+            <div class="kpi-label">
+              <span>Fully Compliant &amp; Active</span>
+              <span class="status-dot"></span>
+            </div>
+            <div class="kpi-value" style="color: var(--tertiary);" id="kpi-compliant-vendors">8</div>
+            <p class="kpi-subtext">All licences &amp; insurances valid &gt; 60 days</p>
+          </div>
+
+          <div class="kpi-tile">
+            <div class="kpi-label">
+              <span>Expiring Soon (&lt; 60 Days)</span>
+              <i data-lucide="alert-triangle" style="width: 14px; height: 14px; color: var(--warning);"></i>
+            </div>
+            <div class="kpi-value" style="color: var(--warning);" id="kpi-expiring-vendors">2</div>
+            <p class="kpi-subtext">Renewal notices required immediately</p>
+          </div>
+
+          <div class="kpi-tile">
+            <div class="kpi-label">
+              <span>Non-Compliant / Expired</span>
+              <i data-lucide="x-circle" style="width: 14px; height: 14px; color: var(--error);"></i>
+            </div>
+            <div class="kpi-value" style="color: var(--error);" id="kpi-expired-vendors">2</div>
+            <p class="kpi-subtext">Work orders suspended until renewed</p>
+          </div>
+
+          <div class="kpi-tile">
+            <div class="kpi-label">
+              <span>Awarded Works (2024–2026)</span>
+              <i data-lucide="briefcase" style="width: 14px; height: 14px;"></i>
+            </div>
+            <div class="kpi-value" id="kpi-total-jobs">RM 122.4k</div>
+            <p class="kpi-subtext">15 tracked repair &amp; rectification scopes</p>
+          </div>
+        </div>
+
+        <!-- Compliance Urgent Action Banner -->
+        <div id="urgent-compliance-alert" class="compliance-alert-banner">
+          <div class="alert-icon-box">
+            <i data-lucide="shield-alert" style="width: 24px; height: 24px;"></i>
+          </div>
+          <div class="alert-content">
+            <div class="alert-title">Compliance Action Required: Contractor Licences Expiring or Lapsed</div>
+            <p class="alert-desc">
+              Under Strata Management governance rules, no contractor may execute common property works at Astana Damansara with lapsed CIDB or Workmen's Compensation policies. Click any contractor below to generate a formal renewal request:
+            </p>
+            <div class="alert-chips" id="alert-chips-container"></div>
+          </div>
+        </div>
+
+        <!-- Filters & Search Toolbar -->
+        <div class="controls-toolbar">
+          <div class="form-group" style="flex: 2 1 260px;">
+            <label class="input-label" for="search-vendors">Search Company / SSM / Contact / Trade</label>
+            <input type="text" id="search-vendors" class="carbon-input" placeholder="e.g. BH Roof, GPKT, 2018010..., Waterproofing" oninput="applyFilters()">
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="filter-status">Compliance Status</label>
+            <select id="filter-status" class="carbon-select" onchange="applyFilters()">
+              <option value="ALL">All Statuses (12)</option>
+              <option value="COMPLIANT">Compliant / Active</option>
+              <option value="EXPIRING">Expiring Soon (&lt; 60 Days)</option>
+              <option value="EXPIRED">Non-Compliant / Expired</option>
+              <option value="REVIEW">Under Verification</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="filter-trade">Primary Trade Category</label>
+            <select id="filter-trade" class="carbon-select" onchange="applyFilters()">
+              <option value="ALL">All Trade Categories</option>
+              <option value="Waterproofing">Waterproofing &amp; Roofing</option>
+              <option value="Civil">Civil, Roads &amp; Drainage</option>
+              <option value="Landscaping">Landscaping &amp; Tree Felling</option>
+              <option value="Painting">Painting &amp; Road Marking</option>
+              <option value="M&E">M&amp;E &amp; Network Cabling</option>
+              <option value="Specialist">Specialist Façade Rectification</option>
+            </select>
+          </div>
+
+          <div class="form-group small">
+            <label class="input-label" for="filter-cidb">CIDB Grade</label>
+            <select id="filter-cidb" class="carbon-select" onchange="applyFilters()">
+              <option value="ALL">All Grades</option>
+              <option value="G1">G1 (≤ RM200k)</option>
+              <option value="G2">G2 (≤ RM500k)</option>
+              <option value="G3">G3 (≤ RM1.0M)</option>
+              <option value="G4+">G4 to G7 (&gt; RM1.0M)</option>
+            </select>
+          </div>
+
+          <div class="form-group auto">
+            <label class="input-label">Display Mode</label>
+            <div class="view-toggle">
+              <button class="toggle-opt active" id="btn-view-table" onclick="setViewMode('table')" title="Tabular View">
+                <i data-lucide="table" style="width: 14px; height: 14px;"></i>
+                <span>Table</span>
+              </button>
+              <button class="toggle-opt" id="btn-view-cards" onclick="setViewMode('cards')" title="Card Grid View">
+                <i data-lucide="grid" style="width: 14px; height: 14px;"></i>
+                <span>Cards</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table View Container -->
+        <div id="vendor-table-wrapper" class="table-container">
+          <table class="carbon-table" id="vendor-data-table">
+            <thead>
+              <tr>
+                <th class="sortable" onclick="sortTable('name')">Company &amp; Reg. Type <span id="sort-icon-name">↕</span></th>
+                <th class="sortable" onclick="sortTable('trade')">Primary Trade <span id="sort-icon-trade">↕</span></th>
+                <th>SSM Registration</th>
+                <th>CIDB Grade &amp; Codes</th>
+                <th>MOF Status</th>
+                <th>Workmen's Comp / Insurance</th>
+                <th class="sortable" onclick="sortTable('rating')">Astana Rating <span id="sort-icon-rating">↕</span></th>
+                <th class="sortable" onclick="sortTable('status')">Compliance <span id="sort-icon-status">↕</span></th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="vendor-table-body"></tbody>
+          </table>
+        </div>
+
+        <!-- Card Grid View Container -->
+        <div id="vendor-cards-wrapper" class="cards-grid" style="display: none;"></div>
+
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: VENDOR REGISTRATION MODULE         -->
+      <!-- ========================================== -->
+      <section id="view-registration" class="tab-view">
+        <div style="margin-bottom: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-sm); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-md);">
+          <div>
+            <h2 class="headline">Vendor Registration &amp; <strong>Licence Tracking</strong></h2>
+            <p class="subhead-desc">
+              Enrol new contractors into Perbadanan Pengurusan Astana Damansara roster. Enforces statutory verification against SSM, CIDB Malaysia, Ministry of Finance (MOF), and mandatory public liability insurance limits.
+            </p>
+          </div>
+          <button class="carbon-btn btn-ghost btn-sm" onclick="prefillSampleRegistration()">
+            <i data-lucide="file-input" style="width: 14px; height: 14px;"></i>
+            <span>Load Sample Contractor Data</span>
+          </button>
+        </div>
+
+        <form id="vendor-registration-form" onsubmit="handleRegistrationSubmit(event)">
+
+          <!-- Section 1: Company Information -->
+          <div class="form-section-card">
+            <div class="form-section-head">
+              <h3 class="form-section-title">1. Corporate &amp; Company Details</h3>
+              <span class="label-mono">Required under Act 757</span>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label class="input-label" for="reg-company-name">Registered Company Name *</label>
+                <input type="text" id="reg-company-name" class="carbon-input" required placeholder="e.g. Apex Waterproofing Solutions Sdn Bhd">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-company-type">Entity Structure *</label>
+                <select id="reg-company-type" class="carbon-select" required>
+                  <option value="Sendirian Berhad (Sdn Bhd)">Sendirian Berhad (Sdn Bhd)</option>
+                  <option value="Enterprise / Sole Proprietorship">Enterprise / Sole Proprietorship</option>
+                  <option value="Partnership / Perkongsian">Partnership / Perkongsian</option>
+                  <option value="Berhad (Bhd)">Berhad (Bhd)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-ssm-no">SSM Registration Number *</label>
+                <input type="text" id="reg-ssm-no" class="carbon-input" required placeholder="e.g. 202101039841 (1419842-P)">
+                <span class="field-hint">Suruhanjaya Syarikat Malaysia 12-digit number</span>
+              </div>
+            </div>
+
+            <div class="form-grid-3" style="margin-top: var(--space-md);">
+              <div class="form-group">
+                <label class="input-label" for="reg-trade">Primary Trade Category *</label>
+                <select id="reg-trade" class="carbon-select" required>
+                  <option value="Waterproofing">Waterproofing &amp; Roofing Works</option>
+                  <option value="Civil">Civil, Roads &amp; Drainage Works</option>
+                  <option value="Landscaping">Landscaping, Tree Felling &amp; Ground Maintenance</option>
+                  <option value="Painting">Building &amp; Car Park Repainting</option>
+                  <option value="M&E">Mechanical, Electrical &amp; Telecommunication</option>
+                  <option value="Specialist">Specialist Façade &amp; Joint Rectification</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-ssm-expiry">SSM Renewal / Expiry Date *</label>
+                <input type="date" id="reg-ssm-expiry" class="carbon-input" required>
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-paid-capital">Paid-Up Capital (MYR)</label>
+                <input type="number" id="reg-paid-capital" class="carbon-input" placeholder="e.g. 100000" min="0" step="1000">
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: var(--space-md);">
+              <div class="form-group">
+                <label class="input-label" for="reg-operating-address">Operating Workshop / Office Address *</label>
+                <input type="text" id="reg-operating-address" class="carbon-input" required placeholder="e.g. No. 18, Jalan PJU 1/3B, Sunway Damansara, 47810 Petaling Jaya, Selangor">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-company-email">Official Correspondence Email *</label>
+                <input type="email" id="reg-company-email" class="carbon-input" required placeholder="office@apexwaterproof.com.my">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Key Personnel Contacts -->
+          <div class="form-section-card">
+            <div class="form-section-head">
+              <h3 class="form-section-title">2. Management &amp; Operational Contacts</h3>
+              <span class="label-mono">Escalation &amp; Site Supervision</span>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label class="input-label" for="reg-contact-name">Principal / Director Name *</label>
+                <input type="text" id="reg-contact-name" class="carbon-input" required placeholder="e.g. Ir. Desmond Tan">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-contact-phone">Director Mobile / Telephone *</label>
+                <input type="text" id="reg-contact-phone" class="carbon-input" required placeholder="e.g. +6012-3456789">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-payment-terms">Standard Payment Terms Quoted *</label>
+                <select id="reg-payment-terms" class="carbon-select" required>
+                  <option value="30 days credit">30 days credit upon invoice</option>
+                  <option value="50% deposit &amp; 50% completion">50% deposit &amp; 50% on completion</option>
+                  <option value="40% deposit &amp; 60% completion">40% deposit &amp; 60% on completion</option>
+                  <option value="14 days credit">14 days credit</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-top: var(--space-md);">
+              <div class="form-group">
+                <label class="input-label" for="reg-site-supervisor">On-Site Supervisor / Project Lead</label>
+                <input type="text" id="reg-site-supervisor" class="carbon-input" placeholder="e.g. Selvam A/L Raman (CIDB Green Card #GC8912)">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="reg-finance-email">Billing / Accounts Email</label>
+                <input type="email" id="reg-finance-email" class="carbon-input" placeholder="accounts@apexwaterproof.com.my">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Statutory & Industry Licences (CIDB, MOF, Insurance) -->
+          <div class="form-section-card">
+            <div class="form-section-head">
+              <h3 class="form-section-title">3. CIDB, MOF &amp; Insurance Compliance Matrix</h3>
+              <span class="label-mono" id="reg-verify-date">Statutory Verification</span>
+            </div>
+
+            <!-- CIDB Section -->
+            <div style="background-color: var(--background); padding: var(--space-md); margin-bottom: var(--space-md); border: var(--rule);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); gap: var(--space-sm); flex-wrap: wrap;">
+                <span class="label-mono" style="font-weight: 600; color: var(--on-surface);">CIDB Malaysia (Lembaga Pembangunan Industri Pembinaan)</span>
+                <span class="verify-pill valid">Mandatory for Structural Works</span>
+              </div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="input-label" for="reg-cidb-reg">CIDB PPK Number *</label>
+                  <input type="text" id="reg-cidb-reg" class="carbon-input" required placeholder="e.g. 0120220914-SL221948">
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-cidb-grade">CIDB Grade *</label>
+                  <select id="reg-cidb-grade" class="carbon-select" required>
+                    <option value="G1">G1 (Tendering limit: Up to RM 200,000)</option>
+                    <option value="G2">G2 (Tendering limit: Up to RM 500,000)</option>
+                    <option value="G3" selected>G3 (Tendering limit: Up to RM 1,000,000)</option>
+                    <option value="G4">G4 (Tendering limit: Up to RM 3,000,000)</option>
+                    <option value="G5">G5 (Tendering limit: Up to RM 5,000,000)</option>
+                    <option value="G6">G6 (Tendering limit: Up to RM 10,000,000)</option>
+                    <option value="G7">G7 (Tendering limit: No Limit)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-cidb-expiry">CIDB Expiry Date *</label>
+                  <input type="date" id="reg-cidb-expiry" class="carbon-input" required>
+                  <span class="field-hint" id="hint-system-date">Current system date</span>
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top: var(--space-sm);">
+                <div class="form-group">
+                  <label class="input-label" for="reg-cidb-codes">CIDB Categories &amp; Specialisations *</label>
+                  <input type="text" id="reg-cidb-codes" class="carbon-input" required placeholder="e.g. B04 (Waterproofing), B24 (Maintenance), CE21 (Roads)">
+                </div>
+                <div class="form-group">
+                  <label class="input-label" for="reg-greencard-count">CIDB Green Card Certified Operatives</label>
+                  <input type="number" id="reg-greencard-count" class="carbon-input" placeholder="e.g. 8" min="0">
+                </div>
+              </div>
+            </div>
+
+            <!-- MOF Section -->
+            <div style="background-color: var(--background); padding: var(--space-md); margin-bottom: var(--space-md); border: var(--rule);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); gap: var(--space-sm); flex-wrap: wrap;">
+                <span class="label-mono" style="font-weight: 600; color: var(--on-surface);">Kementerian Kewangan Malaysia (MOF / Treasury)</span>
+                <span class="verify-pill valid">Government / Strata Certified</span>
+              </div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="input-label" for="reg-mof-status">MOF Registration Status</label>
+                  <select id="reg-mof-status" class="carbon-select">
+                    <option value="REGISTERED">Registered (Active)</option>
+                    <option value="NOT_REGISTERED">Not Registered / Not Applicable</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-mof-ref">MOF Certificate Ref No</label>
+                  <input type="text" id="reg-mof-ref" class="carbon-input" placeholder="e.g. 357-02391824">
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-mof-expiry">MOF Expiry Date</label>
+                  <input type="date" id="reg-mof-expiry" class="carbon-input">
+                </div>
+              </div>
+
+              <div class="form-grid-2" style="margin-top: var(--space-sm);">
+                <div class="form-group">
+                  <label class="input-label" for="reg-mof-bumi">Bumiputera Status</label>
+                  <select id="reg-mof-bumi" class="carbon-select">
+                    <option value="Non-Bumiputera">Non-Bumiputera</option>
+                    <option value="Bumiputera Status">Bumiputera Status</option>
+                    <option value="N/A">Not Applicable</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="input-label" for="reg-mof-codes">Registered Field Codes (Kod Bidang)</label>
+                  <input type="text" id="reg-mof-codes" class="carbon-input" placeholder="e.g. 221001 (Landscaping), 221002 (Cleaning), 220501 (Cabling)">
+                </div>
+              </div>
+            </div>
+
+            <!-- Insurance & Indemnity Section -->
+            <div style="background-color: var(--background); padding: var(--space-md); border: var(--rule);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); gap: var(--space-sm); flex-wrap: wrap;">
+                <span class="label-mono" style="font-weight: 600; color: var(--on-surface);">Mandatory Insurance &amp; Indemnity (Astana Damansara Policy)</span>
+                <span class="verify-pill valid">Min RM 1,000,000 Sum Insured Required</span>
+              </div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label class="input-label" for="reg-insurer-name">Insurance Underwriter *</label>
+                  <input type="text" id="reg-insurer-name" class="carbon-input" required placeholder="e.g. Zurich Insurance Malaysia Bhd">
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-policy-limit">Limit of Indemnity / Accident (MYR) *</label>
+                  <input type="text" id="reg-policy-limit" class="carbon-input" required value="RM 1,000,000.00">
+                </div>
+
+                <div class="form-group">
+                  <label class="input-label" for="reg-insurance-expiry">Insurance Policy Expiry Date *</label>
+                  <input type="date" id="reg-insurance-expiry" class="carbon-input" required>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Section 4: Document Verification Simulator -->
+          <div class="form-section-card">
+            <div class="form-section-head">
+              <h3 class="form-section-title">4. Document Proof Repository Simulator</h3>
+              <span class="label-mono">Audited Strata Repository</span>
+            </div>
+
+            <div class="upload-zone" onclick="simulateFileUpload()">
+              <i data-lucide="upload-cloud" style="width: 32px; height: 32px; color: var(--primary); margin-bottom: 6px;"></i>
+              <div style="font-weight: 600; font-size: 0.9375rem;">Click to Attach Verified Certificates &amp; Schedules</div>
+              <div style="font-size: 0.78rem; color: var(--on-surface-variant); margin-top: 4px;">
+                Supports SSM Corporate Profile, CIDB Perakuan, MOF Sijil, Policy Schedule, &amp; CIDB Green Cards (PDF, JPEG max 10MB)
+              </div>
+            </div>
+
+            <div class="uploaded-doc-list" id="uploaded-docs-container">
+              <div class="uploaded-doc-item">
+                <div class="doc-meta">
+                  <i data-lucide="file-check" style="width: 16px; height: 16px; color: var(--tertiary);"></i>
+                  <span>SSM_Corporate_Information_Report_2026.pdf (1.2 MB)</span>
+                </div>
+                <span class="verify-pill valid">Auto-Verified</span>
+              </div>
+              <div class="uploaded-doc-item">
+                <div class="doc-meta">
+                  <i data-lucide="file-check" style="width: 16px; height: 16px; color: var(--tertiary);"></i>
+                  <span>CIDB_PPK_Certificate_GradeG3.pdf (840 KB)</span>
+                </div>
+                <span class="verify-pill valid">Auto-Verified</span>
+              </div>
+              <div class="uploaded-doc-item">
+                <div class="doc-meta">
+                  <i data-lucide="file-check" style="width: 16px; height: 16px; color: var(--tertiary);"></i>
+                  <span>Public_Liability_Policy_Schedule_Zurich_RM1M.pdf (2.4 MB)</span>
+                </div>
+                <span class="verify-pill valid">Auto-Verified</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submission Action Bar -->
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-md); align-items: center; margin-bottom: var(--space-2xl);">
+            <button type="button" class="carbon-btn btn-ghost" onclick="resetRegistrationForm()">Clear Fields</button>
+            <button type="submit" class="carbon-btn btn-primary" id="btn-submit-vendor">
+              <i data-lucide="check" style="width: 16px; height: 16px;"></i>
+              <span>Register &amp; Enrol Vendor</span>
+            </button>
+          </div>
+
+        </form>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: SCHEDULE OF RATES (SOR) MODULE     -->
+      <!-- ========================================== -->
+      <section id="view-sor" class="tab-view">
+        <div style="margin-bottom: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-sm); display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: var(--space-md);">
+          <div>
+            <h2 class="headline">Condominium <strong>Schedule of Rates (SOR)</strong></h2>
+            <p class="subhead-desc">
+              Centralised maintenance &amp; repair rate benchmark catalog for Astana Damansara. Compiled from audited competitive tenders across roof waterproofing, tree management, car park repainting, and riser plumbing.
+            </p>
+          </div>
+          <div style="display: flex; gap: var(--space-sm);">
+            <button class="carbon-btn btn-ghost btn-sm" onclick="exportSorCSV()">
+              <i data-lucide="download" style="width: 14px; height: 14px;"></i>
+              <span>Export SOR (CSV)</span>
+            </button>
+            <button class="carbon-btn btn-primary btn-sm" onclick="openAddSorModal()">
+              <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+              <span>Add Custom Rate Item</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- SOR Controls -->
+        <div class="controls-toolbar">
+          <div class="form-group" style="flex: 2 1 260px;">
+            <label class="input-label" for="search-sor">Search Rate Item / Code / Specification</label>
+            <input type="text" id="search-sor" class="carbon-input" placeholder="e.g. Torch membrane, Tree felling, 45-degree cement, Cat6" oninput="filterSorTable()">
+          </div>
+
+          <div class="form-group">
+            <label class="input-label" for="filter-sor-trade">Trade Specialisation</label>
+            <select id="filter-sor-trade" class="carbon-select" onchange="filterSorTable()">
+              <option value="ALL">All Maintenance Trades (16)</option>
+              <option value="Waterproofing">Waterproofing &amp; Roofing</option>
+              <option value="Civil">Civil, Roads &amp; Drainage</option>
+              <option value="Landscaping">Landscaping &amp; Grounds</option>
+              <option value="Finishes">Building Fabric &amp; Finishes</option>
+              <option value="ME">M&amp;E, Plumbing &amp; Cabling</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- SOR Table -->
+        <div class="table-container">
+          <table class="carbon-table" id="sor-data-table">
+            <thead>
+              <tr>
+                <th>Item Code</th>
+                <th>Trade &amp; Scope Specification</th>
+                <th>Unit of Measure</th>
+                <th style="text-align: right;">Min Quoted (MYR)</th>
+                <th style="text-align: right;">Astana Benchmark (MYR)</th>
+                <th style="text-align: right;">Max Quoted (MYR)</th>
+                <th>Historical Vendors &amp; Tender Reference</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="sor-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 4: RATE COMPARATOR & COST ESTIMATOR   -->
+      <!-- ========================================== -->
+      <section id="view-estimator" class="tab-view">
+        <div style="margin-bottom: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-sm);">
+          <h2 class="headline">Tender Rate Comparator &amp; <strong>Cost Estimator</strong></h2>
+          <p class="subhead-desc">
+            Assemble multi-vendor comparison models for Astana Damansara Management Corporation (MC) council approval. Evaluates quoted rates against schedule benchmarks, contingency allowances, and warranty coverage.
+          </p>
+        </div>
+
+        <div class="estimator-layout">
+
+          <!-- Left Column: Scope Configurator -->
+          <div>
+            <div class="form-section-card" style="padding: var(--space-md);">
+              <div class="form-section-head">
+                <h3 class="form-section-title">1. Work Scope Scenario</h3>
+                <span class="label-mono">Astana Tender Scenarios</span>
+              </div>
+
+              <div class="form-group" style="margin-bottom: var(--space-md);">
+                <label class="input-label" for="estimator-scenario-preset">Load Verified Work Scope Preset</label>
+                <select id="estimator-scenario-preset" class="carbon-select" onchange="loadEstimatorPreset()">
+                  <option value="B4_ROOF">Block B4: Concrete Roof Slab Torch Waterproofing (226 m² + Skirting)</option>
+                  <option value="B5_TREE">Block B5 Compound: Felling &amp; Disposal of 1 Big Hill Slope Tree</option>
+                  <option value="CARPARK_PAINT">Block A &amp; B: Car Park Line &amp; Divider Repainting (350 Bays)</option>
+                  <option value="DRAIN_COVER">Basement Car Park A1 &amp; A6: Replacement of Heavy-Duty Drain Covers (12 Pcs)</option>
+                  <option value="B4_1B_WALL">Unit B4-1B: Kitchen External Wall Hacking &amp; Waterproofing Box Up</option>
+                  <option value="CUSTOM">Custom Multi-Item Work Order...</option>
+                </select>
+              </div>
+
+              <!-- Scope Itemised Rows -->
+              <div style="margin-bottom: var(--space-md);">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-xs);">
+                  <span class="label-mono">Configured Scope Quantities</span>
+                  <span class="label-mono" id="estimator-scope-count">2 Scope Items</span>
+                </div>
+                <div id="estimator-scope-items-box" style="display: flex; flex-direction: column; gap: var(--space-xs);"></div>
+              </div>
+
+              <!-- Contingency & Preliminaries Controls -->
+              <div class="form-grid-2" style="background-color: var(--background); padding: var(--space-sm); border: var(--rule); margin-bottom: var(--space-md);">
+                <div class="form-group">
+                  <label class="input-label" for="estimator-contingency">Management Contingency Allowance</label>
+                  <select id="estimator-contingency" class="carbon-select" onchange="recalculateEstimates()">
+                    <option value="0">0% (Nil Contingency)</option>
+                    <option value="5" selected>5% Standard Allowance</option>
+                    <option value="10">10% Unforeseen Site Risks</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="input-label" for="estimator-prelims">Preliminaries &amp; Logistics (MYR)</label>
+                  <input type="number" id="estimator-prelims" class="carbon-input" value="1000" min="0" step="100" oninput="recalculateEstimates()">
+                </div>
+              </div>
+
+              <!-- Contractor Selection for Comparison -->
+              <div class="form-section-head">
+                <h3 class="form-section-title">2. Select Contractors for Comparison</h3>
+                <span class="label-mono">Select 2 to 3 Vendors</span>
+              </div>
+              <div id="estimator-vendor-checkboxes" style="display: grid; grid-template-columns: 1fr; gap: var(--space-xs);"></div>
+            </div>
+
+            <!-- Management Memo Generator Card -->
+            <div class="layer-panel" style="margin-top: var(--space-md);">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); gap: var(--space-sm); flex-wrap: wrap;">
+                <span class="label-mono" style="font-weight: 600;">MC Council Recommendation Memo</span>
+                <button class="carbon-btn btn-ghost btn-sm" onclick="copyCouncilMemo()">
+                  <i data-lucide="copy" style="width: 14px; height: 14px;"></i>
+                  <span>Copy Memo</span>
+                </button>
+              </div>
+              <div id="memo-output-text" style="font-family: var(--font-label); font-size: 0.75rem; line-height: 1.5; color: var(--on-surface); white-space: pre-wrap; background: #ffffff; padding: var(--space-md); border: var(--rule);"></div>
+            </div>
+          </div>
+
+          <!-- Right Column: Comparative Analysis & Benchmarking -->
+          <div>
+            <div style="margin-bottom: var(--space-md); border-bottom: var(--rule); padding-bottom: var(--space-xs); display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-sm); flex-wrap: wrap;">
+              <h3 class="headline" style="font-size: 1.15rem; margin: 0;">Comparative <strong>Tender Matrix</strong></h3>
+              <span class="label-mono" id="estimator-benchmark-total">Astana Benchmark: RM 35,156.50</span>
+            </div>
+
+            <div id="estimator-cards-container" style="display: flex; flex-direction: column; gap: var(--space-md);"></div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Institutional Footer -->
+    <footer class="system-footer">
+      <div class="footer-left">
+        <span id="footer-copyright">&copy; Perbadanan Pengurusan Astana Damansara</span>
+        <span>&bull;</span>
+        <span>Management Office: No. 33, Jalan 17/1, 46400 Petaling Jaya, Selangor</span>
+        <span>&bull;</span>
+        <span>Tel: 603-76211625</span>
+      </div>
+      <div>
+        <span>System Version 3.4.1 (Carbon UI) &bull; Verified under Malaysian Strata Management Act 757</span>
+      </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- SLIDE-OUT DRAWER: CONTRACTOR DEEP-DIVE     -->
+    <!-- ========================================== -->
+    <div id="contractor-drawer" class="drawer-overlay" onclick="closeDrawerOnBackdrop(event)">
+      <div class="drawer-panel" onclick="event.stopPropagation()">
+
+        <div class="drawer-header">
+          <div>
+            <div class="label-mono" id="drawer-reg-type">SENDIRIAN BERHAD</div>
+            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 600;" id="drawer-company-name">BH Roof &amp; Waterproof Sdn Bhd</h3>
+          </div>
+          <button class="carbon-btn btn-ghost btn-sm" onclick="closeVendorDrawer()" title="Close panel">
+            <i data-lucide="x" style="width: 18px; height: 18px;"></i>
+          </button>
+        </div>
+
+        <div class="drawer-body" id="drawer-content-body"></div>
+
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL: FORMAL COMPLIANCE RENEWAL NOTICE    -->
+    <!-- ========================================== -->
+    <div id="notice-modal" class="modal-overlay" onclick="closeNoticeModalOnBackdrop(event)">
+      <div class="modal-box" onclick="event.stopPropagation()">
+
+        <div class="modal-header">
+          <div style="display: flex; align-items: center; gap: var(--space-sm);">
+            <i data-lucide="mail-warning" style="width: 20px; height: 20px; color: var(--warning);"></i>
+            <h3>Formal Statutory Compliance Renewal Notice</h3>
+          </div>
+          <button class="carbon-btn btn-ghost btn-sm" onclick="closeNoticeModal()">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p style="font-size: 0.8125rem; color: var(--on-surface-variant); margin-top: 0;">
+            This formal compliance reminder will be recorded in the Astana Damansara vendor register and sent to the contractor's official email address:
+          </p>
+          <div class="notice-preview-box" id="notice-preview-text"></div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="carbon-btn btn-ghost" onclick="closeNoticeModal()">Cancel</button>
+          <button class="carbon-btn btn-primary" onclick="dispatchComplianceNotice()">
+            <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+            <span>Log &amp; Dispatch Notice</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========================================== -->
+    <!-- MODAL: ADD CUSTOM SCHEDULE RATE ITEM       -->
+    <!-- ========================================== -->
+    <div id="add-sor-modal" class="modal-overlay" onclick="closeSorModalOnBackdrop(event)">
+      <div class="modal-box" onclick="event.stopPropagation()">
+
+        <div class="modal-header">
+          <h3>Add Custom Rate Benchmark to Schedule</h3>
+          <button class="carbon-btn btn-ghost btn-sm" onclick="closeAddSorModal()">
+            <i data-lucide="x" style="width: 16px; height: 16px;"></i>
+          </button>
+        </div>
+
+        <form id="add-sor-form" onsubmit="handleAddSorSubmit(event)">
+          <div class="modal-body">
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="input-label" for="sor-new-code">Item Code *</label>
+                <input type="text" id="sor-new-code" class="carbon-input" required placeholder="e.g. WP-07, CV-05, ME-03">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="sor-new-trade">Trade Category *</label>
+                <select id="sor-new-trade" class="carbon-select" required>
+                  <option value="Waterproofing">Waterproofing &amp; Roofing</option>
+                  <option value="Civil">Civil, Roads &amp; Drainage</option>
+                  <option value="Landscaping">Landscaping &amp; Grounds</option>
+                  <option value="Finishes">Building Fabric &amp; Finishes</option>
+                  <option value="ME">M&amp;E, Plumbing &amp; Cabling</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: var(--space-md);">
+              <label class="input-label" for="sor-new-desc">Detailed Work Scope &amp; Technical Specification *</label>
+              <input type="text" id="sor-new-desc" class="carbon-input" required placeholder="e.g. 50mm Hot-Mix Asphalt Resurfacing c/w Tack Coat">
+            </div>
+
+            <div class="form-grid-3" style="margin-top: var(--space-md);">
+              <div class="form-group">
+                <label class="input-label" for="sor-new-unit">Unit of Measure *</label>
+                <input type="text" id="sor-new-unit" class="carbon-input" required placeholder="e.g. m², run metre, piece, lump sum">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="sor-new-bench">Astana Benchmark Rate (MYR) *</label>
+                <input type="number" id="sor-new-bench" class="carbon-input" required step="0.01" min="0" placeholder="e.g. 125.00">
+              </div>
+
+              <div class="form-group">
+                <label class="input-label" for="sor-new-vendor">Tender Reference / Vendor</label>
+                <input type="text" id="sor-new-vendor" class="carbon-input" placeholder="e.g. Competitive Tender Oct 2026">
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="carbon-btn btn-ghost" onclick="closeAddSorModal()">Cancel</button>
+            <button type="submit" class="carbon-btn btn-primary">
+              <i data-lucide="plus" style="width: 14px; height: 14px;"></i>
+              <span>Save Schedule Item</span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- Application Logic -->
+  <script>
+    /**
+     * PERBADANAN PENGURUSAN ASTANA DAMANSARA
+     * Vendor Management & Schedule of Rates System
+     *
+     * Static single-page build for GitHub Pages hosting.
+     * State persists in the browser via localStorage (per device/browser).
+     */
+
+    // Compliance is scored against the real current date, normalised to local midnight
+    // so that "days remaining" is a whole-day count rather than a part-day fraction.
+    const SYSTEM_DATE = (() => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; })();
+    const DATE_SHORT = SYSTEM_DATE.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    const DATE_LONG  = SYSTEM_DATE.toLocaleDateString('en-GB', { day: '2-digit', month: 'long',  year: 'numeric' });
+    const SYSTEM_YEAR = SYSTEM_DATE.getFullYear();
+
+    /** ISO (yyyy-mm-dd) date this many months ahead of today — used for form defaults. */
+    function isoMonthsAhead(months) {
+      const d = new Date(SYSTEM_DATE);
+      d.setMonth(d.getMonth() + months);
+      return d.toISOString().slice(0, 10);
+    }
+
+    const STORAGE_KEY = 'astana-vms-state-v1';
+
+    // Baseline Seed Data directly grounded in Astana Damansara Tender Documents
+    const BASELINE_VENDORS = [
+      {
+        id: "V-001",
+        name: "BH Roof & Waterproof Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201901018472 (1327801-D)",
+        ssmExpiry: "2027-05-14",
+        trade: "Waterproofing",
+        address: "No. 42-1, Jalan Metro Perdana Barat 2, Kepong, 52100 Kuala Lumpur",
+        email: "bhroof@gmail.com",
+        phone: "+6012-3849182",
+        contactPerson: "Tan Boon Huat (Managing Director)",
+        siteSupervisor: "Kenny Wong (Green Card #GC49182)",
+        financeEmail: "accounts@bhroof.com.my",
+        cidbGrade: "G3",
+        cidbReg: "0120190618-SL194821",
+        cidbExpiry: "2027-08-14",
+        cidbCodes: "B04 (Waterproofing), B24 (Maintenance), CE21",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02281941",
+        mofExpiry: "2027-09-30",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "221002 (Building Cleaning & Maintenance)",
+        insurer: "Zurich General Insurance Malaysia Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-05-12",
+        paymentTerms: "50% deposit & 50% completion",
+        rating: 4.8,
+        jobsCompleted: 3,
+        totalBilled: 31000.00,
+        astanaJobHistory: [
+          { job: "Block B4 Roof Top Slab (226 m²)", spec: "4.0mm torch waterproofing membrane c/w primer & 45° angle cement", amount: 28200.00, warranty: "5 years", date: "Oct 2024", status: "Completed & Warranted" },
+          { job: "Block B5 Roof Skirting Area (70 ft)", spec: "4.0mm torch membrane at 1ft + 1ft height", amount: 2800.00, warranty: "1 year", date: "Oct 2024", status: "Completed & Warranted" }
+        ],
+        documents: [
+          { name: "SSM_Form9_BH_Roof.pdf", size: "1.4 MB", verified: true },
+          { name: "CIDB_PPK_G3_Exp2027.pdf", size: "920 KB", verified: true },
+          { name: "Zurich_Workmens_RM1M.pdf", size: "2.1 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-002",
+        name: "Gemilang Facilities Services (M) Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201701042910 (1257088-K)",
+        ssmExpiry: "2027-11-11",
+        trade: "Landscaping",
+        address: "No. 15, Jalan Industri USJ 1/5, 47600 Subang Jaya, Selangor",
+        email: "gemilangfacilities@gmail.com",
+        phone: "+6019-3281093",
+        contactPerson: "Azman bin Razak (Director)",
+        siteSupervisor: "Khairul (Certified Arborist)",
+        financeEmail: "finance@gemilangfs.com.my",
+        cidbGrade: "G3",
+        cidbReg: "0120180112-SL183204",
+        cidbExpiry: "2027-01-20",
+        cidbCodes: "CE21 (Civil), B24 (Maintenance), CE14 (Landscaping)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02198421",
+        mofExpiry: "2027-03-15",
+        mofBumi: "Bumiputera Status",
+        mofCodes: "221001 (Landscaping & Tree Felling), 221002 (Cleaning)",
+        insurer: "Allianz General Insurance Company (M) Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-02-28",
+        paymentTerms: "30 days credit",
+        rating: 4.7,
+        jobsCompleted: 2,
+        totalBilled: 12500.00,
+        astanaJobHistory: [
+          { job: "Tree Felling Behind Block B5 Compound", spec: "Cut off & dispose 1 big tree on-hill slope with skylift, chainsaws & RORO bins", amount: 8000.00, warranty: "Indemnity RM1M", date: "Aug 2024", status: "Completed Safely" },
+          { job: "Perimeter Hill Slope Brush Clearance", spec: "Slope stabilisation brush trimming and obstacle branch disposal", amount: 4500.00, warranty: "30 days", date: "Nov 2025", status: "Completed" }
+        ],
+        documents: [
+          { name: "SSM_Cert_Gemilang.pdf", size: "1.1 MB", verified: true },
+          { name: "Allianz_PL_RM1M.pdf", size: "1.8 MB", verified: true },
+          { name: "MOF_Sijil_Bumiputera.pdf", size: "890 KB", verified: true }
+        ]
+      },
+      {
+        id: "V-003",
+        name: "GPKT Trading",
+        companyType: "Enterprise / Sole Proprietorship",
+        ssmNo: "002918471-V",
+        ssmExpiry: "2026-11-22",
+        trade: "Civil",
+        address: "No. 8A, Jalan SS 2/67, 47300 Petaling Jaya, Selangor",
+        email: "gpkg_trading@yahoo.com",
+        phone: "+6016-2948172",
+        contactPerson: "G. Parthiban (Managing Proprietor)",
+        siteSupervisor: "G. Parthiban",
+        financeEmail: "gpkg_trading@yahoo.com",
+        cidbGrade: "G1",
+        cidbReg: "0120200412-SL201948",
+        cidbExpiry: "2026-11-22",
+        cidbCodes: "B24 (Maintenance), CE21 (Roadworks & Drainage)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02319082",
+        mofExpiry: "2026-12-18",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "221002 (General Cleaning & Pavement Maintenance)",
+        insurer: "Etiqa General Takaful Bhd",
+        policyLimit: "RM 500,000.00",
+        insuranceExpiry: "2026-11-20",
+        paymentTerms: "30 days credit",
+        rating: 4.5,
+        jobsCompleted: 4,
+        totalBilled: 14950.00,
+        astanaJobHistory: [
+          { job: "Balcony Planter Box Waterproofing Unit B4-1B", spec: "Complete membrane & protective screed application", amount: 1850.00, warranty: "1 year", date: "Oct 2024", status: "Completed & Inspected" },
+          { job: "Basement Car Park A1 & A6 Drain Covers", spec: "Replaced damaged heavy steel drain grilles & welded angle bars", amount: 2600.00, warranty: "6 months", date: "Oct 2024", status: "Completed" },
+          { job: "Road Potholes & Premix Patching (3 Locations)", spec: "Layout new premix asphalt & compacting at main driveway", amount: 3800.00, warranty: "1 year", date: "Dec 2024", status: "Completed" },
+          { job: "Car Park Lines & Road Divider Repainting", spec: "Day-labour repainting of parking bays and yellow/black curb markings (RM130/day)", amount: 6700.00, warranty: "3 months", date: "Jun 2025", status: "Completed" }
+        ],
+        documents: [
+          { name: "SSM_Enterprise_Cert.pdf", size: "780 KB", verified: true },
+          { name: "CIDB_G1_License.pdf", size: "640 KB", verified: false }
+        ]
+      },
+      {
+        id: "V-004",
+        name: "TN Green Property",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201601038192 (1209133-A)",
+        ssmExpiry: "2027-09-18",
+        trade: "Waterproofing",
+        address: "No. 12, Jalan SS 25/28, Taman Mayang, 47301 Petaling Jaya, Selangor",
+        email: "tngreenproperty@gmail.com",
+        phone: "+6012-6182940",
+        contactPerson: "Thillai Nathan (Managing Director)",
+        siteSupervisor: "Muthu (CIDB Green Card #GC3819)",
+        financeEmail: "tngreenproperty@gmail.com",
+        cidbGrade: "G2",
+        cidbReg: "0120170824-SL172901",
+        cidbExpiry: "2027-05-10",
+        cidbCodes: "B04 (Waterproofing), B24 (Maintenance), CE14",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02094821",
+        mofExpiry: "2027-06-14",
+        mofBumi: "Bumiputera Status",
+        mofCodes: "221001, 221002",
+        insurer: "Great Eastern General Insurance (M) Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-09-15",
+        paymentTerms: "30 days credit",
+        rating: 4.6,
+        jobsCompleted: 2,
+        totalBilled: 11300.00,
+        astanaJobHistory: [
+          { job: "Unit B4-1B Kitchen External Wall Hacking & Waterproof Box Up", spec: "Hacked wall, applied waterproof sealant, recemented & sealed box-up", amount: 3200.00, warranty: "3 months", date: "Dec 2024", status: "Completed & Settled" },
+          { job: "Perimeter Drainage Angle Frame Alignment", spec: "Welding and alignment of common area drainage channels", amount: 8100.00, warranty: "6 months", date: "Jan 2025", status: "Completed" }
+        ],
+        documents: [
+          { name: "SSM_TN_Green.pdf", size: "1.3 MB", verified: true },
+          { name: "CIDB_PPK_G2.pdf", size: "850 KB", verified: true },
+          { name: "Great_Eastern_PL_RM1M.pdf", size: "1.9 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-005",
+        name: "Firstcom E & A Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201401028491 (1104579-M)",
+        ssmExpiry: "2027-07-27",
+        trade: "M&E",
+        address: "No. 29, Jalan PJS 5/28, Pusat Dagangan Petaling Jaya Selatan, 46150 Petaling Jaya",
+        email: "firstcom.ea@gmail.com",
+        phone: "+6012-2198471",
+        contactPerson: "Alan Lim (Technical Director)",
+        siteSupervisor: "Chew Kok Wai (Registered Wireman PW4)",
+        financeEmail: "billing@firstcom-ea.com",
+        cidbGrade: "G3",
+        cidbReg: "0120150912-SL152841",
+        cidbExpiry: "2027-08-30",
+        cidbCodes: "ME (Mechanical & Electrical), E11 (Telecommunications)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-01984210",
+        mofExpiry: "2027-07-25",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "220501 (Telecommunications Network & Cabling)",
+        insurer: "Chubb Insurance Malaysia Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-08-15",
+        paymentTerms: "30 days credit",
+        rating: 4.9,
+        jobsCompleted: 1,
+        totalBilled: 2450.00,
+        astanaJobHistory: [
+          { job: "Outdoor Cat6 Network Cabling Management Office to Guardhouse", spec: "Installed heavy-duty UV exterior conduit, Cat6 data trunking and Wi-Fi link", amount: 2450.00, warranty: "1 year", date: "May 2025", status: "Active & Commissioned" }
+        ],
+        documents: [
+          { name: "SSM_Firstcom.pdf", size: "1.6 MB", verified: true },
+          { name: "CIDB_G3_ME_E11.pdf", size: "950 KB", verified: true },
+          { name: "Chubb_Workmens_RM1M.pdf", size: "1.7 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-006",
+        name: "Hasreem Engineering",
+        companyType: "Enterprise / Sole Proprietorship",
+        ssmNo: "002591823-P",
+        ssmExpiry: "2027-02-13",
+        trade: "Civil",
+        address: "No. 5, Jalan Saujana Indah 1, Taman Perindustrian Saujana Indah, 40150 Shah Alam",
+        email: "hasreem.eng@gmail.com",
+        phone: "+6017-3819402",
+        contactPerson: "Hasreem bin Mahmud",
+        siteSupervisor: "Hasreem bin Mahmud",
+        financeEmail: "hasreem.eng@gmail.com",
+        cidbGrade: "G2",
+        cidbReg: "0120180415-SL184912",
+        cidbExpiry: "2027-04-15",
+        cidbCodes: "B24 (Building Maintenance), M15 (Plumbing & Gutters)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02148201",
+        mofExpiry: "2027-03-12",
+        mofBumi: "Bumiputera Status",
+        mofCodes: "221002 (General Maintenance)",
+        insurer: "Lonpac Insurance Bhd",
+        policyLimit: "RM 500,000.00",
+        insuranceExpiry: "2027-04-30",
+        paymentTerms: "30 days credit",
+        rating: 4.4,
+        jobsCompleted: 1,
+        totalBilled: 4200.00,
+        astanaJobHistory: [
+          { job: "Replace PVC Rain Gutters & Roof Tiles at Blocks B4, B5 & B6", spec: "Replaced deteriorated gutters and broken tiles at outdoor covered carpark", amount: 4200.00, warranty: "6 months", date: "Mar 2024", status: "Completed" }
+        ],
+        documents: [
+          { name: "SSM_Hasreem_Cert.pdf", size: "910 KB", verified: true },
+          { name: "Lonpac_Policy.pdf", size: "1.2 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-007",
+        name: "Malaya Builder",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "202001019284 (1372604-T)",
+        ssmExpiry: "2027-06-09",
+        trade: "Waterproofing",
+        address: "No. 88, Jalan SS 21/39, Damansara Utama, 47400 Petaling Jaya, Selangor",
+        email: "malayabuilder@gmail.com",
+        phone: "+6012-9841120",
+        contactPerson: "Steven Chong (Director)",
+        siteSupervisor: "Lau Mun Kit",
+        financeEmail: "steven@malayabuilder.com",
+        cidbGrade: "G3",
+        cidbReg: "0120210214-SL210948",
+        cidbExpiry: "2027-04-08",
+        cidbCodes: "B04 (Waterproofing), B24 (Building Maintenance)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02481920",
+        mofExpiry: "2027-05-10",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "221002",
+        insurer: "AIA General Insurance Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-06-12",
+        paymentTerms: "40% deposit & 60% completion",
+        rating: 4.6,
+        jobsCompleted: 1,
+        totalBilled: 26500.00,
+        astanaJobHistory: [
+          { job: "Waterproofing Torch Membrane at Roof Slab Block A5 Level 4", spec: "Applied 4.0mm torch membrane c/w 7 years extended waterproofing warranty", amount: 26500.00, warranty: "7 years", date: "Jun 2025", status: "Completed & Active Warranty" }
+        ],
+        documents: [
+          { name: "SSM_MalayaBuilder.pdf", size: "1.4 MB", verified: true },
+          { name: "CIDB_G3_PPK.pdf", size: "890 KB", verified: true },
+          { name: "AIA_Insurance_RM1M.pdf", size: "2.0 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-008",
+        name: "Reinshield Specialised Systems (M) Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201801024918 (1286937-V)",
+        ssmExpiry: "2027-07-09",
+        trade: "Specialist",
+        address: "Unit 3A-08, Block B, Phileo Damansara 1, 46350 Petaling Jaya, Selangor",
+        email: "reinshield.rx@gmail.com",
+        phone: "+6012-3819201",
+        contactPerson: "Dr. Eric Wong / Ir. Raymond Tan",
+        siteSupervisor: "Goh Wei Siong",
+        financeEmail: "billing@reinshield.com.my",
+        cidbGrade: "G3",
+        cidbReg: "0120190820-SL197821",
+        cidbExpiry: "2027-09-15",
+        cidbCodes: "B04 (Waterproofing), B28 (Curtain Wall & Façade Works)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02381920",
+        mofExpiry: "2027-10-10",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "221002 (Specialist Building Structural Repair)",
+        insurer: "MSIG Insurance (Malaysia) Bhd",
+        policyLimit: "RM 1,000,000.00",
+        insuranceExpiry: "2027-08-15",
+        paymentTerms: "50% contract acceptance, 50% upon day 2 commencement",
+        rating: 4.9,
+        jobsCompleted: 1,
+        totalBilled: 19500.00,
+        astanaJobHistory: [
+          { job: "Windows & Façade Leakage Rectification Unit B4-1B", spec: "High-pressure polymer injection sealing with REINSHIELD RX™ (Report AD-20260421-FE-001)", amount: 19500.00, warranty: "5 years", date: "Apr 2026", status: "Commissioned" }
+        ],
+        documents: [
+          { name: "SSM_Reinshield.pdf", size: "1.5 MB", verified: true },
+          { name: "CIDB_PPK_Specialist.pdf", size: "980 KB", verified: true },
+          { name: "MSIG_PL_RM1M.pdf", size: "1.9 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-009",
+        name: "Asia Seal Engineering Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201101034921 (963055-P)",
+        ssmExpiry: "2027-09-13",
+        trade: "Waterproofing",
+        address: "No. 19, Jalan Industri USJ 1/3, 47600 Subang Jaya, Selangor",
+        email: "info@asiaseal.com.my",
+        phone: "+6012-4829102",
+        contactPerson: "Desmond Tan (Director)",
+        siteSupervisor: "Chong Lip Keong",
+        financeEmail: "accounts@asiaseal.com.my",
+        cidbGrade: "G4+",
+        cidbReg: "0120120419-SL124819",
+        cidbExpiry: "2027-07-18",
+        cidbCodes: "B04 (Waterproofing), CE21 (Civil Works)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-01829103",
+        mofExpiry: "2027-09-20",
+        mofBumi: "Non-Bumiputera",
+        mofCodes: "221002",
+        insurer: "Tokio Marine Insurans (Malaysia) Bhd",
+        policyLimit: "RM 2,000,000.00",
+        insuranceExpiry: "2027-08-30",
+        paymentTerms: "50% deposit & 50% completion",
+        rating: 4.2,
+        jobsCompleted: 0,
+        totalBilled: 0.00,
+        astanaJobHistory: [
+          { job: "Block B4 Roof Slab Tender (226 m²)", spec: "3.5mm membrane quote (RM 33,900.00) — not awarded due to higher pricing", amount: 0.00, warranty: "5 years", date: "Sep 2024", status: "Tenderer Only" }
+        ],
+        documents: [
+          { name: "SSM_AsiaSeal.pdf", size: "1.7 MB", verified: true },
+          { name: "CIDB_G4_PPK.pdf", size: "1.2 MB", verified: true }
+        ]
+      },
+      {
+        id: "V-010",
+        name: "Check Management Services",
+        companyType: "Enterprise / Sole Proprietorship",
+        ssmNo: "002819472-X",
+        ssmExpiry: "2026-11-28",
+        trade: "Civil",
+        address: "No. 45, Jalan 17/45, 46400 Petaling Jaya, Selangor",
+        email: "checkmgmt@gmail.com",
+        phone: "+6016-3918402",
+        contactPerson: "S. Chandran",
+        siteSupervisor: "S. Chandran",
+        financeEmail: "checkmgmt@gmail.com",
+        cidbGrade: "G1",
+        cidbReg: "0120190115-SL191823",
+        cidbExpiry: "2026-11-28",
+        cidbCodes: "B24 (Maintenance), CE21",
+        mofStatus: "NOT_REGISTERED",
+        mofRef: "N/A",
+        mofExpiry: "2026-11-28",
+        mofBumi: "N/A",
+        mofCodes: "N/A",
+        insurer: "Berjaya Sompo Insurance Bhd",
+        policyLimit: "RM 500,000.00",
+        insuranceExpiry: "2026-11-30",
+        paymentTerms: "30 days credit",
+        rating: 4.0,
+        jobsCompleted: 0,
+        totalBilled: 0.00,
+        astanaJobHistory: [
+          { job: "Basement Drain Cover & Angle Bar Tender", spec: "Submitted quote for Block A1 & A6 car park drain channel repair", amount: 0.00, warranty: "3 months", date: "Sep 2024", status: "Tenderer Only" }
+        ],
+        documents: [
+          { name: "SSM_CheckMgmt.pdf", size: "620 KB", verified: true }
+        ]
+      },
+      {
+        id: "V-011",
+        name: "Teras Maju Resources Sdn Bhd",
+        companyType: "Sendirian Berhad (Sdn Bhd)",
+        ssmNo: "201501048291 (1163615-K)",
+        ssmExpiry: "2026-09-15",
+        trade: "Landscaping",
+        address: "No. 22, Jalan Industri USJ 1/7, 47600 Subang Jaya, Selangor",
+        email: "terasmaju.res@gmail.com",
+        phone: "+6013-3918274",
+        contactPerson: "Roslan Ahmad (Managing Director)",
+        siteSupervisor: "Roslan Ahmad",
+        financeEmail: "accounts@terasmaju.com",
+        cidbGrade: "G2",
+        cidbReg: "0120161021-SL164920",
+        cidbExpiry: "2026-09-15",
+        cidbCodes: "CE21, CE14 (Landscaping Works)",
+        mofStatus: "REGISTERED",
+        mofRef: "357-02019482",
+        mofExpiry: "2026-08-12",
+        mofBumi: "Bumiputera Status",
+        mofCodes: "221001 (Tree Felling)",
+        insurer: "Pacific & Orient Insurance Co. Bhd",
+        policyLimit: "RM 500,000.00",
+        insuranceExpiry: "2026-09-10",
+        paymentTerms: "30 days credit",
+        rating: 3.8,
+        jobsCompleted: 0,
+        totalBilled: 0.00,
+        astanaJobHistory: [
+          { job: "Tree Felling Behind Block B5 Tender", spec: "Quote RM 8,500.00 — not awarded due to higher quote & subsequent licence lapse", amount: 0.00, warranty: "Nil", date: "Jul 2024", status: "Tenderer Only" }
+        ],
+        documents: [
+          { name: "SSM_TerasMaju.pdf", size: "850 KB", verified: true },
+          { name: "CIDB_Expired.pdf", size: "710 KB", verified: false }
+        ]
+      },
+      {
+        id: "V-012",
+        name: "LY Renovation & Construction",
+        companyType: "Enterprise / Sole Proprietorship",
+        ssmNo: "002381940-K",
+        ssmExpiry: "2026-10-14",
+        trade: "Waterproofing",
+        address: "No. 67, Jalan Mega Mendung, Kompleks Bandar, 58200 Kuala Lumpur",
+        email: "lyrenoconstruction@yahoo.com",
+        phone: "+6012-3091847",
+        contactPerson: "Lee Yong Seng",
+        siteSupervisor: "Lee Yong Seng",
+        financeEmail: "lyrenoconstruction@yahoo.com",
+        cidbGrade: "G1",
+        cidbReg: "0120150218-SL151829",
+        cidbExpiry: "2026-10-14",
+        cidbCodes: "B24 (Building Maintenance)",
+        mofStatus: "NOT_REGISTERED",
+        mofRef: "N/A",
+        mofExpiry: "2026-10-14",
+        mofBumi: "N/A",
+        mofCodes: "N/A",
+        insurer: "Tune Insurance Malaysia Bhd",
+        policyLimit: "RM 250,000.00",
+        insuranceExpiry: "2026-10-15",
+        paymentTerms: "40% deposit & 60% completion",
+        rating: 3.5,
+        jobsCompleted: 0,
+        totalBilled: 0.00,
+        astanaJobHistory: [
+          { job: "Block B4 Roof Slab Tender", spec: "3.5mm membrane quote (RM 31,520.00) with 3-year warranty — not awarded", amount: 0.00, warranty: "3 years", date: "Sep 2024", status: "Tenderer Only" }
+        ],
+        documents: [
+          { name: "SSM_LY_Reno.pdf", size: "640 KB", verified: true }
+        ]
+      }
+    ];
+
+    // Baseline Schedule of Rates (SOR) grounded in Astana Damansara actual contracts
+    const BASELINE_SOR = [
+      { code: "WP-01", trade: "Waterproofing", desc: "4.0mm Torch-applied APP Waterproofing Membrane to concrete roof slab (c/w scraping existing substrate, water jet cleaning, primer application & cement levelling)", unit: "m²", minRate: 124.78, benchmark: 130.00, maxRate: 150.00, reference: "BH Roof RM28,200 (226m² @ RM124.78/m²); LY Reno RM139.47/m²; Asia Seal RM150.00/m²" },
+      { code: "WP-02", trade: "Waterproofing", desc: "45-Degree Angle Cement Fillet along perimeter wall and parapet junctions prior to membrane application", unit: "run metre", minRate: 35.00, benchmark: 40.00, maxRate: 50.00, reference: "Standard Astana roof detailing specification" },
+      { code: "WP-03", trade: "Waterproofing", desc: "4.0mm Torch-applied Waterproofing Membrane to rooftop skirting area (1 ft floor + 1 ft wall upturn height)", unit: "linear foot", minRate: 40.00, benchmark: 45.00, maxRate: 100.00, reference: "BH Roof RM2,800 for 70ft (RM40/ft); Asia Seal RM7,000 (RM100/ft)" },
+      { code: "WP-04", trade: "Waterproofing", desc: "Balcony Planter Box Waterproofing: Substrate preparation, liquid polyurethane/cementitious coating & protective cement screed", unit: "per planter box", minRate: 1650.00, benchmark: 1850.00, maxRate: 2200.00, reference: "GPKT Trading B4-1B actual billed RM1,850.00 (Oct 2024)" },
+      { code: "WP-05", trade: "Waterproofing", desc: "External Wall Box Up Hacking, Application of Waterproof Sealant, Recementing & Weatherproof Render", unit: "per section", minRate: 3200.00, benchmark: 3500.00, maxRate: 4500.00, reference: "TN Green RM3,200 (awarded Dec 2024); Gemilang & Check Mgmt quotes" },
+      { code: "WP-06", trade: "Waterproofing", desc: "High-Pressure Polymer Injection & Façade Windows Joint Rectification with REINSHIELD RX™", unit: "per window bay", minRate: 2400.00, benchmark: 2600.00, maxRate: 2900.00, reference: "Reinshield Rev01 Quotation #80014 (RM2,600/bay; 7 bays total RM19.5k)" },
+      { code: "CV-01", trade: "Landscaping", desc: "Felling, Debranching & Safe Removal of Big Hill Slope Tree (inclusive of machinery chainsaws, skylift, scaffolding & site clearing)", unit: "per tree", minRate: 8000.00, benchmark: 8200.00, maxRate: 8500.00, reference: "Gemilang RM8,000 (awarded Aug 2024); TN Green RM8,100; Teras Maju RM8,500" },
+      { code: "CV-02", trade: "Landscaping", desc: "Heavy Debris Haulage & Disposal using 3-Tonne RORO Bins (per load)", unit: "per RORO bin", minRate: 350.00, benchmark: 400.00, maxRate: 500.00, reference: "Astana waste cart-away standard" },
+      { code: "CV-03", trade: "Civil", desc: "Road Pothole Rectification & New Premix Asphalt Layering (Hacking, compacting, tack coat & 50mm hot mix)", unit: "per patch / m²", minRate: 380.00, benchmark: 450.00, maxRate: 600.00, reference: "GPKT Trading 3 locations total RM3,800 (Dec 2024)" },
+      { code: "CV-04", trade: "Civil", desc: "Replacement of Heavy-Duty Hot-Dip Galvanised Mild Steel Drain Covers (Basement Car Park) c/w welded angle bar seating", unit: "per piece", minRate: 215.00, benchmark: 240.00, maxRate: 320.00, reference: "GPKT Trading Block A1 & A6 carpark repair tender (Oct 2024)" },
+      { code: "BF-01", trade: "Finishes", desc: "Repainting Car Park Bay Lines (Standard 2.5m x 5.0m white parking bay line marking)", unit: "per bay", minRate: 18.00, benchmark: 22.00, maxRate: 28.00, reference: "Contract repainting tender comparison May 2025" },
+      { code: "BF-02", trade: "Finishes", desc: "Repainting Road Divider & Speed Humps (Yellow and black reflective warning enamel)", unit: "linear metre", minRate: 15.00, benchmark: 18.00, maxRate: 25.00, reference: "Astana internal road safety tender (Jun 2025)" },
+      { code: "BF-03", trade: "Finishes", desc: "Contract Painter / Semi-Skilled Labour Day-Rate (Mon–Fri, 9:00am–5:00pm, excluding paint materials)", unit: "man-day", minRate: 130.00, benchmark: 130.00, maxRate: 160.00, reference: "GPKT Trading approved rate of RM130/day (MC Minute Jun 2025)" },
+      { code: "BF-04", trade: "Finishes", desc: "Supply Heavy-Duty Traffic Road Marking Paint (5-Litre drum)", unit: "per 5L drum", minRate: 110.00, benchmark: 122.00, maxRate: 135.00, reference: "Herber Light approved quote (Jun 2025) vs Tong Huat & CRV Hardware" },
+      { code: "BF-05", trade: "Finishes", desc: "Supply & Install Heavy-Duty PVC Rain Gutters & Align Interlocking Roof Tiles (Outdoor Carpark Sheds)", unit: "lump sum", minRate: 4200.00, benchmark: 4500.00, maxRate: 5200.00, reference: "Hasreem Engineering awarded RM4,200 (Blocks B4, B5, B6 Mar 2024)" },
+      { code: "ME-01", trade: "ME", desc: "Supply & Pull Exterior UV-Rated Cat6 Network Cable in Weatherproof High-Impact PVC Conduit (MO to Guardhouse)", unit: "per run (~120m)", minRate: 2450.00, benchmark: 2600.00, maxRate: 3100.00, reference: "Firstcom E&A Option 2 approved tender (May 2025)" }
+    ];
+
+    // Global State Container
+    let state = {
+      vendors: JSON.parse(JSON.stringify(BASELINE_VENDORS)),
+      sor: JSON.parse(JSON.stringify(BASELINE_SOR)),
+      currentViewMode: 'table',
+      sortColumn: 'name',
+      sortAsc: true,
+      selectedContractorId: null,
+      selectedNoticeVendorId: null,
+      estimator: {
+        preset: 'B4_ROOF',
+        items: [
+          { code: 'WP-01', desc: '4.0mm Torch Waterproofing Membrane (Roof Slab)', qty: 226, unit: 'm²', benchmark: 130.00 },
+          { code: 'WP-03', desc: '4.0mm Torch Membrane to Skirting Area (1ft + 1ft)', qty: 70, unit: 'linear foot', benchmark: 45.00 }
+        ],
+        contingencyPct: 5,
+        prelims: 1000,
+        selectedVendors: ['V-001', 'V-012', 'V-009']
+      }
+    };
+
+    /**
+     * Compute vendor compliance status against SYSTEM_DATE (the current date)
+     */
+    function calculateCompliance(vendor) {
+      const now = SYSTEM_DATE.getTime();
+      const ssmDate = new Date(vendor.ssmExpiry).getTime();
+      const cidbDate = new Date(vendor.cidbExpiry).getTime();
+      const insDate = new Date(vendor.insuranceExpiry).getTime();
+
+      if (ssmDate < now || cidbDate < now || insDate < now) {
+        let expiredFields = [];
+        if (ssmDate < now) expiredFields.push('SSM');
+        if (cidbDate < now) expiredFields.push('CIDB');
+        if (insDate < now) expiredFields.push('Insurance');
+        return {
+          status: 'EXPIRED',
+          label: 'Non-Compliant (Expired)',
+          badgeClass: 'status-expired',
+          details: `${expiredFields.join(' & ')} lapsed`,
+          daysRemaining: Math.floor((Math.min(ssmDate, cidbDate, insDate) - now) / (1000 * 60 * 60 * 24))
+        };
+      }
+
+      const sixtyDaysMs = 60 * 24 * 60 * 60 * 1000;
+      const minExpiry = Math.min(ssmDate, cidbDate, insDate);
+      const diffDays = Math.floor((minExpiry - now) / (1000 * 60 * 60 * 24));
+
+      if (minExpiry - now <= sixtyDaysMs) {
+        let expiringFields = [];
+        if (ssmDate - now <= sixtyDaysMs) expiringFields.push(`SSM (${Math.floor((ssmDate - now) / 86400000)}d)`);
+        if (cidbDate - now <= sixtyDaysMs) expiringFields.push(`CIDB (${Math.floor((cidbDate - now) / 86400000)}d)`);
+        if (insDate - now <= sixtyDaysMs) expiringFields.push(`Policy (${Math.floor((insDate - now) / 86400000)}d)`);
+        return {
+          status: 'EXPIRING',
+          label: 'Expiring Soon (<60d)',
+          badgeClass: 'status-expiring',
+          details: expiringFields.join(', '),
+          daysRemaining: diffDays
+        };
+      }
+
+      return {
+        status: 'COMPLIANT',
+        label: 'Compliant & Active',
+        badgeClass: 'status-compliant',
+        details: 'All statutory certs valid',
+        daysRemaining: diffDays
+      };
+    }
+
+    /**
+     * Tab Switching Logic
+     */
+    function switchTab(tabId) {
+      const tabs = ['dashboard', 'registration', 'sor', 'estimator'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tab-btn-${t}`);
+        const view = document.getElementById(`view-${t}`);
+        if (btn) { btn.classList.remove('active'); btn.setAttribute('aria-selected', 'false'); }
+        if (view) view.classList.remove('active');
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      const activeView = document.getElementById(`view-${tabId}`);
+      if (activeBtn) { activeBtn.classList.add('active'); activeBtn.setAttribute('aria-selected', 'true'); }
+      if (activeView) activeView.classList.add('active');
+
+      if (tabId === 'dashboard') renderDashboard();
+      else if (tabId === 'sor') renderSorTable();
+      else if (tabId === 'estimator') renderEstimator();
+
+      refreshIcons();
+    }
+
+    function refreshIcons() {
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
+
+    /**
+     * Render Vendor Dashboard (Table & Cards)
+     */
+    function renderDashboard() {
+      let total = state.vendors.length;
+      let compliant = 0, expiring = 0, expired = 0;
+      let expiringOrExpiredList = [];
+
+      state.vendors.forEach(v => {
+        const comp = calculateCompliance(v);
+        if (comp.status === 'COMPLIANT') compliant++;
+        else if (comp.status === 'EXPIRING') { expiring++; expiringOrExpiredList.push({ vendor: v, comp }); }
+        else if (comp.status === 'EXPIRED') { expired++; expiringOrExpiredList.push({ vendor: v, comp }); }
+      });
+
+      const setText = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setText('kpi-total-vendors', total);
+      setText('kpi-compliant-vendors', compliant);
+      setText('kpi-expiring-vendors', expiring);
+      setText('kpi-expired-vendors', expired);
+      setText('nav-count-vendors', total);
+
+      const totalBilled = state.vendors.reduce((sum, v) => sum + (v.totalBilled || 0), 0);
+      setText('kpi-total-jobs', `RM ${(totalBilled / 1000).toFixed(1)}k`);
+      const jobCount = state.vendors.reduce((n, v) => n + (v.jobsCompleted || 0), 0);
+      const jobSubtext = document.querySelector('#kpi-total-jobs + .kpi-subtext');
+      if (jobSubtext) jobSubtext.textContent = `${jobCount} tracked repair & rectification scopes`;
+
+      // Urgent Alert Chips
+      const alertContainer = document.getElementById('alert-chips-container');
+      const banner = document.getElementById('urgent-compliance-alert');
+      if (alertContainer) {
+        if (expiringOrExpiredList.length === 0) {
+          if (banner) banner.style.display = 'none';
+        } else {
+          if (banner) banner.style.display = 'flex';
+          let chipsHtml = '';
+          expiringOrExpiredList.forEach(item => {
+            const isLapsed = item.comp.status === 'EXPIRED';
+            const icon = isLapsed ? 'alert-octagon' : 'clock';
+            const style = isLapsed ? 'border-color: var(--error); color: var(--error); font-weight: 600;' : '';
+            chipsHtml += `
+              <div class="alert-chip" style="${style}" onclick="openNoticeModal('${item.vendor.id}')" title="Click to prepare renewal notice">
+                <i data-lucide="${icon}" style="width: 12px; height: 12px;"></i>
+                <span>${item.vendor.name}: ${item.comp.details}</span>
+              </div>`;
+          });
+          alertContainer.innerHTML = chipsHtml;
+        }
+      }
+
+      // Filter & Sort
+      const searchVal = (document.getElementById('search-vendors')?.value || '').toLowerCase().trim();
+      const statusFilter = document.getElementById('filter-status')?.value || 'ALL';
+      const tradeFilter = document.getElementById('filter-trade')?.value || 'ALL';
+      const cidbFilter = document.getElementById('filter-cidb')?.value || 'ALL';
+
+      let filtered = state.vendors.filter(v => {
+        const comp = calculateCompliance(v);
+        if (statusFilter !== 'ALL' && comp.status !== statusFilter) return false;
+        if (tradeFilter !== 'ALL' && v.trade !== tradeFilter) return false;
+        if (cidbFilter === 'G1' && v.cidbGrade !== 'G1') return false;
+        if (cidbFilter === 'G2' && v.cidbGrade !== 'G2') return false;
+        if (cidbFilter === 'G3' && v.cidbGrade !== 'G3') return false;
+        if (cidbFilter === 'G4+' && !['G4', 'G4+', 'G5', 'G6', 'G7'].includes(v.cidbGrade)) return false;
+        if (searchVal) {
+          const matchStr = `${v.name} ${v.ssmNo} ${v.contactPerson} ${v.trade} ${v.cidbCodes} ${v.email}`.toLowerCase();
+          if (!matchStr.includes(searchVal)) return false;
+        }
+        return true;
+      });
+
+      filtered.sort((a, b) => {
+        let valA, valB;
+        if (state.sortColumn === 'name') { valA = a.name.toLowerCase(); valB = b.name.toLowerCase(); }
+        else if (state.sortColumn === 'trade') { valA = a.trade.toLowerCase(); valB = b.trade.toLowerCase(); }
+        else if (state.sortColumn === 'rating') { valA = a.rating; valB = b.rating; }
+        else if (state.sortColumn === 'status') {
+          const order = { 'EXPIRED': 0, 'EXPIRING': 1, 'COMPLIANT': 2 };
+          valA = order[calculateCompliance(a).status];
+          valB = order[calculateCompliance(b).status];
+        } else { valA = a.name; valB = b.name; }
+        if (valA < valB) return state.sortAsc ? -1 : 1;
+        if (valA > valB) return state.sortAsc ? 1 : -1;
+        return 0;
+      });
+
+      // Table
+      const tableBody = document.getElementById('vendor-table-body');
+      if (tableBody) {
+        if (filtered.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; padding: var(--space-xl); color: var(--on-surface-variant);">No contractors match the active filter criteria. Try broadening your search or resetting filters.</td></tr>`;
+        } else {
+          let rowsHtml = '';
+          filtered.forEach(v => {
+            const comp = calculateCompliance(v);
+            const cidbClass = v.cidbGrade === 'G1' ? 'background-color: #f4f4f4;' : (v.cidbGrade === 'G3' ? 'background-color: #d0e2ff; color: #002d9c;' : '');
+
+            rowsHtml += `
+              <tr>
+                <td>
+                  <div style="font-weight: 600; color: var(--on-surface);">${v.name}</div>
+                  <div class="label-mono" style="font-size: 0.68rem; color: var(--on-surface-variant);">${v.companyType}</div>
+                </td>
+                <td>
+                  <span class="label-mono" style="font-weight: 600;">${v.trade}</span>
+                  <div style="font-size: 0.72rem; color: var(--on-surface-variant);">${v.jobsCompleted} Astana Jobs</div>
+                </td>
+                <td class="mono-cell">
+                  <div>${v.ssmNo}</div>
+                  <div style="font-size: 0.72rem; color: ${new Date(v.ssmExpiry) < SYSTEM_DATE ? 'var(--error)' : 'var(--on-surface-variant)'};">Exp: ${v.ssmExpiry}</div>
+                </td>
+                <td>
+                  <span class="cidb-grade-tag" style="${cidbClass}">${v.cidbGrade}</span>
+                  <div class="label-mono" style="font-size: 0.68rem; margin-top: 2px;">${v.cidbCodes.split(',')[0]}</div>
+                  <div style="font-size: 0.72rem; color: ${new Date(v.cidbExpiry) < SYSTEM_DATE ? 'var(--error)' : 'var(--on-surface-variant)'};">PPK Exp: ${v.cidbExpiry}</div>
+                </td>
+                <td>
+                  ${v.mofStatus === 'REGISTERED'
+                    ? `<span class="verify-pill valid">MOF Active</span><div class="label-mono" style="font-size: 0.68rem; margin-top: 2px;">${v.mofBumi === 'Bumiputera Status' ? 'Bumiputera' : 'Standard'}</div>`
+                    : `<span class="verify-pill" style="background:#e0e0e0; color:#525252;">Not Reg</span>`}
+                </td>
+                <td>
+                  <div style="font-weight: 500; font-size: 0.8125rem;">${v.policyLimit}</div>
+                  <div style="font-size: 0.72rem; color: ${new Date(v.insuranceExpiry) < SYSTEM_DATE ? 'var(--error)' : 'var(--on-surface-variant)'};">Policy Exp: ${v.insuranceExpiry}</div>
+                </td>
+                <td>
+                  <div style="display: flex; align-items: center; gap: 4px; font-weight: 600; font-family: var(--font-label);">
+                    <span>${v.rating.toFixed(1)}</span>
+                    <i data-lucide="star" style="width: 12px; height: 12px; fill: #f1c21b; color: #f1c21b;"></i>
+                  </div>
+                  <div style="font-size: 0.72rem; color: var(--on-surface-variant);">${v.paymentTerms}</div>
+                </td>
+                <td>
+                  <span class="badge-pill ${comp.badgeClass}"><span>${comp.label}</span></span>
+                  <div style="font-size: 0.72rem; color: var(--on-surface-variant); margin-top: 2px;">
+                    ${comp.daysRemaining >= 0 ? `${comp.daysRemaining}d validity` : `Expired ${Math.abs(comp.daysRemaining)}d ago`}
+                  </div>
+                </td>
+                <td style="text-align: right; white-space: nowrap;">
+                  <button class="carbon-btn btn-ghost btn-sm" onclick="openVendorDrawer('${v.id}')" title="View Full Contractor Dossier">
+                    <i data-lucide="eye" style="width: 14px; height: 14px;"></i>
+                    <span>Dossier</span>
+                  </button>
+                  ${comp.status !== 'COMPLIANT' ? `
+                    <button class="carbon-btn btn-danger btn-sm" onclick="openNoticeModal('${v.id}')" title="Issue Formal Notice" style="margin-left: 4px;">
+                      <i data-lucide="mail-warning" style="width: 14px; height: 14px;"></i>
+                    </button>` : ''}
+                </td>
+              </tr>`;
+          });
+          tableBody.innerHTML = rowsHtml;
+        }
+      }
+
+      // Cards
+      const cardsContainer = document.getElementById('vendor-cards-wrapper');
+      if (cardsContainer) {
+        let cardsHtml = '';
+        filtered.forEach(v => {
+          const comp = calculateCompliance(v);
+          let borderClass = 'border-compliant';
+          if (comp.status === 'EXPIRING') borderClass = 'border-expiring';
+          if (comp.status === 'EXPIRED') borderClass = 'border-expired';
+
+          cardsHtml += `
+            <div class="contractor-card ${borderClass}">
+              <div>
+                <div class="card-top">
+                  <div>
+                    <h4 class="card-company-name">${v.name}</h4>
+                    <p class="card-ssm-no">${v.ssmNo} &bull; ${v.companyType}</p>
+                  </div>
+                  <span class="badge-pill ${comp.badgeClass}">${comp.label}</span>
+                </div>
+
+                <div class="card-meta-list">
+                  <div class="card-meta-item">
+                    <div class="meta-k">Primary Trade</div>
+                    <div class="meta-v">${v.trade}</div>
+                  </div>
+                  <div class="card-meta-item">
+                    <div class="meta-k">CIDB Grade</div>
+                    <div class="meta-v">${v.cidbGrade} (Exp: ${v.cidbExpiry})</div>
+                  </div>
+                  <div class="card-meta-item">
+                    <div class="meta-k">Insurance Limit</div>
+                    <div class="meta-v">${v.policyLimit}</div>
+                  </div>
+                  <div class="card-meta-item">
+                    <div class="meta-k">Astana Track Record</div>
+                    <div class="meta-v">${v.jobsCompleted} Jobs &bull; ★ ${v.rating.toFixed(1)}</div>
+                  </div>
+                </div>
+
+                <div class="card-history-strip">
+                  <strong>Key Contact:</strong> ${v.contactPerson} (${v.phone})<br>
+                  <strong>Terms:</strong> ${v.paymentTerms}
+                </div>
+              </div>
+
+              <div class="card-footer-actions">
+                <button class="carbon-btn btn-ghost btn-sm" onclick="openVendorDrawer('${v.id}')">
+                  <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+                  <span>Inspect Dossier</span>
+                </button>
+                ${comp.status !== 'COMPLIANT' ? `
+                  <button class="carbon-btn btn-danger btn-sm" onclick="openNoticeModal('${v.id}')">
+                    <i data-lucide="send" style="width: 14px; height: 14px;"></i>
+                    <span>Notice</span>
+                  </button>` : `
+                  <button class="carbon-btn btn-secondary btn-sm" onclick="quickQuoteForVendor('${v.id}')">
+                    <i data-lucide="calculator" style="width: 14px; height: 14px;"></i>
+                    <span>Quote</span>
+                  </button>`}
+              </div>
+            </div>`;
+        });
+        cardsContainer.innerHTML = cardsHtml;
+      }
+
+      refreshIcons();
+    }
+
+    function applyFilters() { renderDashboard(); }
+
+    function sortTable(column) {
+      if (state.sortColumn === column) state.sortAsc = !state.sortAsc;
+      else { state.sortColumn = column; state.sortAsc = true; }
+
+      ['name', 'trade', 'rating', 'status'].forEach(col => {
+        const iconEl = document.getElementById(`sort-icon-${col}`);
+        if (iconEl) iconEl.textContent = (col === state.sortColumn) ? (state.sortAsc ? '↑' : '↓') : '↕';
+      });
+
+      renderDashboard();
+    }
+
+    function setViewMode(mode) {
+      state.currentViewMode = mode;
+      const btnTable = document.getElementById('btn-view-table');
+      const btnCards = document.getElementById('btn-view-cards');
+      const tableWrapper = document.getElementById('vendor-table-wrapper');
+      const cardsWrapper = document.getElementById('vendor-cards-wrapper');
+
+      if (mode === 'table') {
+        btnTable?.classList.add('active');
+        btnCards?.classList.remove('active');
+        if (tableWrapper) tableWrapper.style.display = 'block';
+        if (cardsWrapper) cardsWrapper.style.display = 'none';
+      } else {
+        btnTable?.classList.remove('active');
+        btnCards?.classList.add('active');
+        if (tableWrapper) tableWrapper.style.display = 'none';
+        if (cardsWrapper) cardsWrapper.style.display = 'grid';
+      }
+    }
+
+    /**
+     * Contractor Deep-Dive Drawer
+     */
+    function openVendorDrawer(vendorId) {
+      const vendor = state.vendors.find(v => v.id === vendorId);
+      if (!vendor) return;
+
+      state.selectedContractorId = vendorId;
+      const comp = calculateCompliance(vendor);
+
+      const elName = document.getElementById('drawer-company-name');
+      const elType = document.getElementById('drawer-reg-type');
+      if (elName) elName.textContent = vendor.name;
+      if (elType) elType.textContent = `${vendor.companyType.toUpperCase()} • SSM ${vendor.ssmNo}`;
+
+      const drawerBody = document.getElementById('drawer-content-body');
+      if (drawerBody) {
+        let historyRows = '';
+        if (vendor.astanaJobHistory.length === 0) {
+          historyRows = `<div style="font-size: 0.8125rem; color: var(--on-surface-variant); padding: var(--space-sm);">No awarded contracts recorded yet. Tendering roster member.</div>`;
+        } else {
+          vendor.astanaJobHistory.forEach(j => {
+            historyRows += `
+              <div style="background-color: var(--surface-container); padding: var(--space-sm); border-left: 3px solid var(--primary); margin-bottom: var(--space-xs);">
+                <div style="display: flex; justify-content: space-between; font-weight: 600; font-size: 0.875rem; gap: var(--space-sm);">
+                  <span>${j.job}</span>
+                  <span style="font-family: var(--font-label); white-space: nowrap;">${j.amount > 0 ? `RM ${j.amount.toLocaleString('en-MY', { minimumFractionDigits: 2 })}` : 'Tender Submitted'}</span>
+                </div>
+                <div style="font-size: 0.78rem; color: var(--on-surface-variant); margin: 2px 0;">${j.spec}</div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--on-surface-variant); font-family: var(--font-label); gap: var(--space-sm);">
+                  <span>Date: ${j.date} &bull; Warranty: ${j.warranty}</span>
+                  <span style="color: var(--tertiary); font-weight: 600;">${j.status}</span>
+                </div>
+              </div>`;
+          });
+        }
+
+        let docsList = '';
+        vendor.documents.forEach(doc => {
+          docsList += `
+            <div class="uploaded-doc-item">
+              <div class="doc-meta">
+                <i data-lucide="${doc.verified ? 'check-circle-2' : 'alert-circle'}" style="width: 14px; height: 14px; color: ${doc.verified ? 'var(--tertiary)' : 'var(--warning)'};"></i>
+                <span>${doc.name} (${doc.size})</span>
+              </div>
+              <span class="verify-pill ${doc.verified ? 'valid' : 'warn'}">${doc.verified ? 'Verified Active' : 'Pending Verification'}</span>
+            </div>`;
+        });
+
+        drawerBody.innerHTML = `
+          <div class="layer-panel" style="margin-bottom: var(--space-md);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-sm); gap: var(--space-sm); flex-wrap: wrap;">
+              <span class="label-mono" style="font-weight: 600;">Overall Statutory Standing</span>
+              <span class="badge-pill ${comp.badgeClass}">${comp.label}</span>
+            </div>
+            <div style="font-size: 0.8125rem;">
+              <strong>Compliance Diagnostic:</strong> ${comp.details}
+              <div style="font-size: 0.75rem; color: var(--on-surface-variant); margin-top: 2px;">
+                Audited against Act 757 &amp; CIDB Act 520 regulations as of ${DATE_LONG}.
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: var(--space-lg);">
+            <div class="form-section-head">
+              <h4 class="form-section-title">1. Statutory Licences &amp; Insurance Matrix</h4>
+            </div>
+
+            <div class="card-meta-list" style="border: none; grid-template-columns: 1fr 1fr; background: var(--surface-container-low); padding: var(--space-sm);">
+              <div class="card-meta-item">
+                <div class="meta-k">SSM Registration</div>
+                <div class="meta-v">${vendor.ssmNo}</div>
+                <div class="field-hint">Expires: ${vendor.ssmExpiry}</div>
+              </div>
+              <div class="card-meta-item">
+                <div class="meta-k">CIDB Malaysia Grade</div>
+                <div class="meta-v">${vendor.cidbGrade} &bull; Reg: ${vendor.cidbReg}</div>
+                <div class="field-hint">Expires: ${vendor.cidbExpiry}</div>
+              </div>
+              <div class="card-meta-item">
+                <div class="meta-k">CIDB Specialisations</div>
+                <div class="meta-v">${vendor.cidbCodes}</div>
+              </div>
+              <div class="card-meta-item">
+                <div class="meta-k">MOF Treasury Registration</div>
+                <div class="meta-v">${vendor.mofStatus === 'REGISTERED' ? `${vendor.mofRef} (${vendor.mofBumi})` : 'Not Enrolled'}</div>
+                <div class="field-hint">${vendor.mofStatus === 'REGISTERED' ? `Expires: ${vendor.mofExpiry}` : 'N/A'}</div>
+              </div>
+              <div class="card-meta-item">
+                <div class="meta-k">Insurance Underwriter</div>
+                <div class="meta-v">${vendor.insurer}</div>
+              </div>
+              <div class="card-meta-item">
+                <div class="meta-k">Workmen &amp; Public Liability</div>
+                <div class="meta-v">${vendor.policyLimit} (Exp: ${vendor.insuranceExpiry})</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: var(--space-lg);">
+            <div class="form-section-head">
+              <h4 class="form-section-title">2. Operational Contacts &amp; Terms</h4>
+            </div>
+            <div style="font-size: 0.8125rem; line-height: 1.6;">
+              <div><strong>Operating Address:</strong> ${vendor.address}</div>
+              <div><strong>Primary Contact:</strong> ${vendor.contactPerson} &bull; <strong>Phone:</strong> ${vendor.phone}</div>
+              <div><strong>Official Email:</strong> ${vendor.email} &bull; <strong>Billing:</strong> ${vendor.financeEmail}</div>
+              <div><strong>On-Site Supervisor:</strong> ${vendor.siteSupervisor}</div>
+              <div><strong>Payment Terms Agreed:</strong> ${vendor.paymentTerms}</div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: var(--space-lg);">
+            <div class="form-section-head">
+              <h4 class="form-section-title">3. Past Works at Astana Damansara (${vendor.astanaJobHistory.length})</h4>
+              <span class="label-mono">Total Billed: RM ${vendor.totalBilled.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</span>
+            </div>
+            ${historyRows}
+          </div>
+
+          <div style="margin-bottom: var(--space-lg);">
+            <div class="form-section-head">
+              <h4 class="form-section-title">4. Document Proofs &amp; Certificates</h4>
+            </div>
+            <div class="uploaded-doc-list">${docsList}</div>
+          </div>
+
+          <div style="display: flex; gap: var(--space-sm); border-top: var(--rule); padding-top: var(--space-md); margin-top: var(--space-md); flex-wrap: wrap;">
+            <button class="carbon-btn btn-primary" onclick="quickQuoteForVendor('${vendor.id}'); closeVendorDrawer();">
+              <i data-lucide="calculator" style="width: 14px; height: 14px;"></i>
+              <span>Launch in Rate Estimator</span>
+            </button>
+            <button class="carbon-btn btn-ghost" onclick="openNoticeModal('${vendor.id}')">
+              <i data-lucide="mail-warning" style="width: 14px; height: 14px;"></i>
+              <span>Issue Compliance Notice</span>
+            </button>
+          </div>`;
+      }
+
+      document.getElementById('contractor-drawer')?.classList.add('active');
+      refreshIcons();
+    }
+
+    function closeVendorDrawer() {
+      document.getElementById('contractor-drawer')?.classList.remove('active');
+    }
+
+    function closeDrawerOnBackdrop(e) {
+      if (e.target.id === 'contractor-drawer') closeVendorDrawer();
+    }
+
+    /**
+     * Formal Compliance Renewal Notice Modal
+     */
+    function openNoticeModal(vendorId) {
+      const vendor = state.vendors.find(v => v.id === vendorId);
+      if (!vendor) return;
+
+      state.selectedNoticeVendorId = vendorId;
+
+      const previewBox = document.getElementById('notice-preview-text');
+      if (previewBox) {
+        const refNo = `AD/MC/VMS-COMP/${SYSTEM_YEAR}/${vendor.id}`;
+        previewBox.innerHTML = `
+          <div class="notice-header-block">
+            <div style="font-weight: 700; font-size: 0.95rem; text-transform: uppercase;">PERBADANAN PENGURUSAN ASTANA DAMANSARA</div>
+            <div style="font-size: 0.72rem; color: var(--on-surface-variant);">Management Office, No. 33, Jalan 17/1, 46400 Petaling Jaya, Selangor | Tel: 03-76211625</div>
+          </div>
+          <div style="margin-bottom: var(--space-sm); font-family: var(--font-label); font-size: 0.72rem;">
+            <strong>Ref:</strong> ${refNo}<br>
+            <strong>Date:</strong> ${DATE_LONG}<br>
+            <strong>To:</strong> The Managing Director, ${vendor.name}<br>
+            <strong>Attention:</strong> ${vendor.contactPerson} (${vendor.email})
+          </div>
+          <div style="font-weight: 600; margin-bottom: var(--space-sm); text-decoration: underline;">
+            NOTICE OF STATUTORY LICENCE / INSURANCE COMPLIANCE REQUIREMENT
+          </div>
+          <p style="margin: 0 0 var(--space-xs) 0;">Dear Sir / Madam,</p>
+          <p style="margin: 0 0 var(--space-xs) 0;">
+            Please be advised that according to the mandatory vendor compliance records of Perbadanan Pengurusan Astana Damansara, the following statutory credential(s) for your company are currently lapsed or due for renewal:
+          </p>
+          <div style="background-color: #ffffff; border: 1px solid var(--outline-variant); padding: var(--space-sm); margin: var(--space-sm) 0; font-family: var(--font-label); font-size: 0.75rem;">
+            &bull; <strong>SSM Registration (${vendor.ssmNo}):</strong> Expiry Date: ${vendor.ssmExpiry}<br>
+            &bull; <strong>CIDB Malaysia PPK (${vendor.cidbReg} - Grade ${vendor.cidbGrade}):</strong> Expiry Date: ${vendor.cidbExpiry}<br>
+            &bull; <strong>Public Liability &amp; Workmen's Policy (${vendor.insurer}):</strong> Expiry Date: ${vendor.insuranceExpiry} (Policy Sum: ${vendor.policyLimit})
+          </div>
+          <p style="margin: 0 0 var(--space-xs) 0;">
+            Under the provisions of the Strata Management Act 2013 (Act 757) and our building safety bylaws, all active works, purchase orders, and site entry permits for contractors with lapsed documentation remain suspended pending submission of verified renewal certificates.
+          </p>
+          <p style="margin: 0 0 var(--space-xs) 0;">
+            Kindly submit the renewed certified copies to the Management Office via reply email to <em>astanacondomanager@gmail.com</em> within seven (7) business days.
+          </p>
+          <div style="margin-top: var(--space-md); font-size: 0.78rem;">
+            Yours faithfully,<br>
+            <strong>Building Manager / Management Corporation</strong><br>
+            Perbadanan Pengurusan Astana Damansara
+          </div>`;
+      }
+
+      document.getElementById('notice-modal')?.classList.add('active');
+    }
+
+    function closeNoticeModal() {
+      document.getElementById('notice-modal')?.classList.remove('active');
+    }
+
+    function closeNoticeModalOnBackdrop(e) {
+      if (e.target.id === 'notice-modal') closeNoticeModal();
+    }
+
+    function dispatchComplianceNotice() {
+      const vendor = state.vendors.find(v => v.id === state.selectedNoticeVendorId);
+      if (!vendor) return;
+      alert(`Compliance Renewal Notice logged for ${vendor.name}. Formal notification copy queued for ${vendor.email}.`);
+      closeNoticeModal();
+      saveApplicationState();
+    }
+
+    /**
+     * Vendor Registration Form Submission
+     */
+    function handleRegistrationSubmit(e) {
+      e.preventDefault();
+
+      const val = id => document.getElementById(id)?.value.trim();
+
+      const name = val('reg-company-name');
+      const companyType = document.getElementById('reg-company-type')?.value;
+      const ssmNo = val('reg-ssm-no');
+      const trade = document.getElementById('reg-trade')?.value;
+      const ssmExpiry = document.getElementById('reg-ssm-expiry')?.value;
+      const operatingAddress = val('reg-operating-address');
+      const email = val('reg-company-email');
+      const contactPerson = val('reg-contact-name');
+      const phone = val('reg-contact-phone');
+      const paymentTerms = document.getElementById('reg-payment-terms')?.value;
+      const siteSupervisor = val('reg-site-supervisor') || 'Assigned Site Engineer';
+      const financeEmail = val('reg-finance-email') || email;
+
+      const cidbReg = val('reg-cidb-reg');
+      const cidbGrade = document.getElementById('reg-cidb-grade')?.value;
+      const cidbExpiry = document.getElementById('reg-cidb-expiry')?.value;
+      const cidbCodes = val('reg-cidb-codes');
+
+      const mofStatus = document.getElementById('reg-mof-status')?.value;
+      const mofRef = val('reg-mof-ref') || 'N/A';
+      const mofExpiry = document.getElementById('reg-mof-expiry')?.value || '2027-12-31';
+      const mofBumi = document.getElementById('reg-mof-bumi')?.value;
+      const mofCodes = val('reg-mof-codes') || 'N/A';
+
+      const insurer = val('reg-insurer-name');
+      const policyLimit = val('reg-policy-limit');
+      const insuranceExpiry = document.getElementById('reg-insurance-expiry')?.value;
+
+      if (!name || !ssmNo || !cidbReg || !insurer) {
+        alert('Please complete all mandatory marked fields (*).');
+        return;
+      }
+
+      // Allocate the next free sequential ID so re-registrations never collide.
+      const usedNums = state.vendors
+        .map(v => parseInt(String(v.id).replace(/\D/g, ''), 10))
+        .filter(n => !isNaN(n));
+      const nextNum = usedNums.length ? Math.max(...usedNums) + 1 : 1;
+      const newId = `V-${String(nextNum).padStart(3, '0')}`;
+
+      const newVendor = {
+        id: newId, name, companyType, ssmNo, ssmExpiry, trade,
+        address: operatingAddress, email, phone, contactPerson, siteSupervisor, financeEmail,
+        cidbGrade, cidbReg, cidbExpiry, cidbCodes,
+        mofStatus, mofRef, mofExpiry, mofBumi, mofCodes,
+        insurer, policyLimit, insuranceExpiry, paymentTerms,
+        rating: 5.0,
+        jobsCompleted: 0,
+        totalBilled: 0.00,
+        astanaJobHistory: [],
+        documents: [
+          { name: `SSM_Certificate_${ssmNo.replace(/[^a-zA-Z0-9]/g, '')}.pdf`, size: '1.2 MB', verified: true },
+          { name: `CIDB_PPK_${cidbReg.replace(/[^a-zA-Z0-9]/g, '')}.pdf`, size: '840 KB', verified: true },
+          { name: `Insurance_Policy_${insurer.split(' ')[0]}.pdf`, size: '1.9 MB', verified: true }
+        ]
+      };
+
+      state.vendors.unshift(newVendor);
+      saveApplicationState();
+
+      alert(`Vendor "${name}" successfully registered and enrolled in Astana Damansara roster with ID: ${newId}.`);
+
+      resetRegistrationForm();
+      switchTab('dashboard');
+    }
+
+    function resetRegistrationForm() {
+      document.getElementById('vendor-registration-form')?.reset();
+      ['reg-ssm-expiry', 'reg-cidb-expiry', 'reg-mof-expiry', 'reg-insurance-expiry']
+        .forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      applyDateLabels();
+    }
+
+    function prefillSampleRegistration() {
+      const set = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+
+      set('reg-company-name', 'Damansara Mega Waterproofing Services Sdn Bhd');
+      set('reg-company-type', 'Sendirian Berhad (Sdn Bhd)');
+      set('reg-ssm-no', '202201048192 (1428190-V)');
+      set('reg-trade', 'Waterproofing');
+      set('reg-ssm-expiry', isoMonthsAhead(12));
+      set('reg-paid-capital', '250000');
+      set('reg-operating-address', 'No. 33, Jalan SS 21/56, Damansara Utama, 47400 Petaling Jaya, Selangor');
+      set('reg-company-email', 'info@damansaramega.com.my');
+      set('reg-contact-name', 'Ir. Vincent Leong (Project Director)');
+      set('reg-contact-phone', '+6012-8821948');
+      set('reg-payment-terms', '50% deposit & 50% completion');
+      set('reg-site-supervisor', 'Kamal Azri (CIDB Green Card #GC99182)');
+      set('reg-finance-email', 'accounts@damansaramega.com.my');
+
+      set('reg-cidb-reg', '0120221120-SL224918');
+      set('reg-cidb-grade', 'G3');
+      set('reg-cidb-expiry', isoMonthsAhead(13));
+      set('reg-cidb-codes', 'B04 (Waterproofing), B24 (Maintenance), CE21 (Roadworks)');
+      set('reg-greencard-count', '12');
+
+      set('reg-mof-status', 'REGISTERED');
+      set('reg-mof-ref', '357-02491822');
+      set('reg-mof-expiry', isoMonthsAhead(12));
+      set('reg-mof-bumi', 'Bumiputera Status');
+      set('reg-mof-codes', '221002 (Building Maintenance & Waterproofing)');
+
+      set('reg-insurer-name', 'QBE Insurance (Malaysia) Bhd');
+      set('reg-policy-limit', 'RM 1,000,000.00');
+      set('reg-insurance-expiry', isoMonthsAhead(10));
+    }
+
+    function simulateFileUpload() {
+      const container = document.getElementById('uploaded-docs-container');
+      if (!container) return;
+
+      const mockDocs = [
+        { name: "CIDB_Green_Card_Registry_Roster.pdf", size: "1.1 MB" },
+        { name: "Bank_Account_Statement_Header_Maybank.pdf", size: "750 KB" },
+        { name: "Past_Job_Completion_Certificate_Astana.pdf", size: "2.3 MB" }
+      ];
+      const randomDoc = mockDocs[Math.floor(Math.random() * mockDocs.length)];
+
+      const item = document.createElement('div');
+      item.className = 'uploaded-doc-item';
+      item.innerHTML = `
+        <div class="doc-meta">
+          <i data-lucide="file-check" style="width: 16px; height: 16px; color: var(--tertiary);"></i>
+          <span>${randomDoc.name} (${randomDoc.size})</span>
+        </div>
+        <span class="verify-pill valid">Uploaded &amp; Verified</span>`;
+      container.appendChild(item);
+
+      refreshIcons();
+    }
+
+    /**
+     * Schedule of Rates (SOR) Catalog Handlers
+     */
+    function renderSorTable() {
+      const searchVal = (document.getElementById('search-sor')?.value || '').toLowerCase().trim();
+      const tradeFilter = document.getElementById('filter-sor-trade')?.value || 'ALL';
+
+      const filtered = state.sor.filter(item => {
+        if (tradeFilter !== 'ALL' && item.trade !== tradeFilter) return false;
+        if (searchVal) {
+          const m = `${item.code} ${item.desc} ${item.unit} ${item.reference}`.toLowerCase();
+          if (!m.includes(searchVal)) return false;
+        }
+        return true;
+      });
+
+      const tableBody = document.getElementById('sor-table-body');
+      if (tableBody) {
+        if (filtered.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: var(--space-xl); color: var(--on-surface-variant);">No rate items match your filter criteria.</td></tr>`;
+        } else {
+          let rowsHtml = '';
+          filtered.forEach(item => {
+            rowsHtml += `
+              <tr>
+                <td class="mono-cell"><span style="font-weight: 700; color: var(--primary);">${item.code}</span></td>
+                <td>
+                  <div style="font-weight: 500; color: var(--on-surface);">${item.desc}</div>
+                  <div class="label-mono" style="font-size: 0.68rem; color: var(--on-surface-variant); margin-top: 2px;">Trade: ${item.trade}</div>
+                </td>
+                <td class="mono-cell" style="white-space: nowrap;">${item.unit}</td>
+                <td class="num-cell" style="color: var(--on-surface-variant);">RM ${item.minRate.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</td>
+                <td class="num-cell"><span class="benchmark-badge">RM ${item.benchmark.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</span></td>
+                <td class="num-cell" style="color: var(--on-surface-variant);">RM ${item.maxRate.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</td>
+                <td style="font-size: 0.75rem; color: var(--on-surface-variant); max-width: 260px;">${item.reference}</td>
+                <td style="text-align: right; white-space: nowrap;">
+                  <button class="carbon-btn btn-ghost btn-sm" onclick="addSorItemToEstimator('${item.code}')" title="Add item to Cost Estimator">
+                    <i data-lucide="plus-circle" style="width: 14px; height: 14px;"></i>
+                    <span>Estimate</span>
+                  </button>
+                </td>
+              </tr>`;
+          });
+          tableBody.innerHTML = rowsHtml;
+        }
+      }
+
+      const sorCount = document.getElementById('nav-count-sor');
+      if (sorCount) sorCount.textContent = state.sor.length;
+
+      refreshIcons();
+    }
+
+    function filterSorTable() { renderSorTable(); }
+
+    function openAddSorModal() { document.getElementById('add-sor-modal')?.classList.add('active'); }
+    function closeAddSorModal() { document.getElementById('add-sor-modal')?.classList.remove('active'); }
+    function closeSorModalOnBackdrop(e) { if (e.target.id === 'add-sor-modal') closeAddSorModal(); }
+
+    function handleAddSorSubmit(e) {
+      e.preventDefault();
+      const code = document.getElementById('sor-new-code')?.value.trim().toUpperCase();
+      const trade = document.getElementById('sor-new-trade')?.value;
+      const desc = document.getElementById('sor-new-desc')?.value.trim();
+      const unit = document.getElementById('sor-new-unit')?.value.trim();
+      const benchmark = parseFloat(document.getElementById('sor-new-bench')?.value || 0);
+      const reference = document.getElementById('sor-new-vendor')?.value.trim() || 'Astana Standard Tender';
+
+      if (!code || !desc || !unit || isNaN(benchmark) || benchmark <= 0) {
+        alert('Please fill all mandatory fields with valid rates.');
+        return;
+      }
+
+      if (state.sor.some(s => s.code === code)) {
+        alert(`Item code ${code} already exists in the Schedule of Rates. Use a unique code.`);
+        return;
+      }
+
+      state.sor.push({
+        code, trade, desc, unit,
+        minRate: +(benchmark * 0.9).toFixed(2),
+        benchmark: +benchmark.toFixed(2),
+        maxRate: +(benchmark * 1.15).toFixed(2),
+        reference
+      });
+
+      saveApplicationState();
+      closeAddSorModal();
+      document.getElementById('add-sor-form')?.reset();
+      renderSorTable();
+      alert(`Rate item [${code}] successfully added to Astana Schedule of Rates.`);
+    }
+
+    function addSorItemToEstimator(code) {
+      const sorItem = state.sor.find(s => s.code === code);
+      if (!sorItem) return;
+
+      const exists = state.estimator.items.find(i => i.code === code);
+      if (exists) exists.qty += 1;
+      else state.estimator.items.push({
+        code: sorItem.code,
+        desc: sorItem.desc,
+        qty: 1,
+        unit: sorItem.unit,
+        benchmark: sorItem.benchmark
+      });
+
+      switchTab('estimator');
+    }
+
+    /**
+     * Rate Comparator & Cost Estimator Handlers
+     */
+    function renderEstimator() {
+      const itemsBox = document.getElementById('estimator-scope-items-box');
+      if (itemsBox) {
+        let itemsHtml = '';
+        state.estimator.items.forEach((item, idx) => {
+          itemsHtml += `
+            <div style="background-color: var(--background); border: var(--rule); padding: var(--space-xs) var(--space-sm); display: flex; align-items: center; justify-content: space-between; gap: var(--space-sm);">
+              <div style="flex: 1; min-width: 0;">
+                <div style="font-weight: 600; font-size: 0.8125rem;">${item.code}: ${item.desc}</div>
+                <div class="label-mono" style="font-size: 0.68rem; color: var(--on-surface-variant);">Benchmark: RM ${item.benchmark.toFixed(2)} / ${item.unit}</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <input type="number" value="${item.qty}" min="1" step="any" aria-label="Quantity for ${item.code}" style="width: 70px; height: 32px; padding: 0 4px; font-family: var(--font-label); font-size: 0.8125rem; border: var(--field-rule); text-align: right;" onchange="updateEstimatorQty(${idx}, this.value)">
+                <span class="label-mono" style="font-size: 0.68rem; width: 50px;">${item.unit}</span>
+                <button class="carbon-btn btn-ghost btn-sm" style="height: 32px; padding: 0 6px;" onclick="removeEstimatorItem(${idx})" title="Remove item">
+                  <i data-lucide="trash-2" style="width: 14px; height: 14px; color: var(--error);"></i>
+                </button>
+              </div>
+            </div>`;
+        });
+        itemsBox.innerHTML = itemsHtml ||
+          `<div style="font-size: 0.8125rem; color: var(--on-surface-variant);">No scope items configured. Add rate items from the Schedule of Rates tab.</div>`;
+      }
+
+      const countEl = document.getElementById('estimator-scope-count');
+      if (countEl) countEl.textContent = `${state.estimator.items.length} Scope Items`;
+
+      const vBox = document.getElementById('estimator-vendor-checkboxes');
+      if (vBox) {
+        let vHtml = '';
+        state.vendors.forEach(v => {
+          const isChecked = state.estimator.selectedVendors.includes(v.id);
+          const comp = calculateCompliance(v);
+          vHtml += `
+            <label style="display: flex; align-items: center; gap: var(--space-sm); font-size: 0.8125rem; padding: 4px 6px; background-color: var(--background); border: var(--rule); cursor: pointer;">
+              <input type="checkbox" value="${v.id}" ${isChecked ? 'checked' : ''} onchange="toggleEstimatorVendor('${v.id}')">
+              <span style="font-weight: 500; flex: 1;">${v.name} (${v.trade})</span>
+              <span class="badge-pill ${comp.badgeClass}" style="font-size: 0.65rem;">${v.cidbGrade}</span>
+            </label>`;
+        });
+        vBox.innerHTML = vHtml;
+      }
+
+      recalculateEstimates();
+      refreshIcons();
+    }
+
+    const ESTIMATOR_PRESETS = {
+      B4_ROOF: {
+        items: [
+          { code: 'WP-01', desc: '4.0mm Torch Waterproofing Membrane (Roof Slab)', qty: 226, unit: 'm²', benchmark: 130.00 },
+          { code: 'WP-03', desc: '4.0mm Torch Membrane to Skirting Area (1ft + 1ft)', qty: 70, unit: 'linear foot', benchmark: 45.00 }
+        ],
+        prelims: 1000, contingencyPct: 5, selectedVendors: ['V-001', 'V-012', 'V-009']
+      },
+      B5_TREE: {
+        items: [
+          { code: 'CV-01', desc: 'Felling & Disposal of 1 Big Hill Slope Tree', qty: 1, unit: 'per tree', benchmark: 8200.00 },
+          { code: 'CV-02', desc: 'Heavy Debris Haulage & Disposal (RORO Bins)', qty: 2, unit: 'per RORO bin', benchmark: 400.00 }
+        ],
+        prelims: 1000, contingencyPct: 5, selectedVendors: ['V-002', 'V-004', 'V-011']
+      },
+      CARPARK_PAINT: {
+        items: [
+          { code: 'BF-01', desc: 'Repainting Car Park Bay Lines', qty: 350, unit: 'per bay', benchmark: 22.00 },
+          { code: 'BF-02', desc: 'Repainting Road Divider & Speed Humps', qty: 120, unit: 'linear metre', benchmark: 18.00 }
+        ],
+        prelims: 500, contingencyPct: 5, selectedVendors: ['V-003', 'V-004']
+      },
+      DRAIN_COVER: {
+        items: [
+          { code: 'CV-04', desc: 'Replacement of Heavy Galvanised Drain Covers & Angle Frames', qty: 12, unit: 'per piece', benchmark: 240.00 }
+        ],
+        prelims: 400, contingencyPct: 5, selectedVendors: ['V-003', 'V-004', 'V-010']
+      },
+      B4_1B_WALL: {
+        items: [
+          { code: 'WP-05', desc: 'Kitchen External Wall Hacking & Waterproof Box Up', qty: 1, unit: 'per section', benchmark: 3500.00 }
+        ],
+        prelims: 500, contingencyPct: 5, selectedVendors: ['V-004', 'V-002', 'V-003']
+      }
+    };
+
+    function loadEstimatorPreset() {
+      const preset = document.getElementById('estimator-scenario-preset')?.value;
+      state.estimator.preset = preset;
+
+      const cfg = ESTIMATOR_PRESETS[preset];
+      if (cfg) {
+        state.estimator.items = JSON.parse(JSON.stringify(cfg.items));
+        state.estimator.prelims = cfg.prelims;
+        state.estimator.contingencyPct = cfg.contingencyPct;
+        state.estimator.selectedVendors = cfg.selectedVendors.slice();
+      }
+
+      const elPrelims = document.getElementById('estimator-prelims');
+      if (elPrelims) elPrelims.value = state.estimator.prelims;
+      const elCont = document.getElementById('estimator-contingency');
+      if (elCont) elCont.value = state.estimator.contingencyPct;
+
+      renderEstimator();
+    }
+
+    function updateEstimatorQty(index, val) {
+      const num = parseFloat(val);
+      if (!isNaN(num) && num > 0) {
+        state.estimator.items[index].qty = num;
+        recalculateEstimates();
+      }
+    }
+
+    function removeEstimatorItem(index) {
+      state.estimator.items.splice(index, 1);
+      renderEstimator();
+    }
+
+    function toggleEstimatorVendor(vendorId) {
+      const idx = state.estimator.selectedVendors.indexOf(vendorId);
+      if (idx >= 0) state.estimator.selectedVendors.splice(idx, 1);
+      else state.estimator.selectedVendors.push(vendorId);
+      recalculateEstimates();
+    }
+
+    // Historical quote behaviour per vendor, derived from past Astana tenders.
+    const VENDOR_QUOTE_PROFILE = {
+      "V-001": { factor: 0.94, warranty: "5 Years (4.0mm Membrane)", note: "Recommended by MO Seran: 4mm thickness, 5-year warranty, visited site multiple times." },
+      "V-012": { factor: 1.05, warranty: "3 Years (3.5mm Membrane)", note: "Higher unit cost per mm; only 3.5mm thickness offered." },
+      "V-009": { factor: 1.15, warranty: "5 Years (3.5mm Membrane)", note: "Highest quotation RM 33,900. G4 certified with high corporate overhead." },
+      "V-002": { factor: 0.95, warranty: "RM1M Indemnity Insured", note: "Lowest quoted tree removal at RM 8,000.00 lump sum with full crane & arborist coverage." },
+      "V-004": { factor: 0.96, warranty: "3 Months Warranty", note: "Confirmed wall hack & waterproof sealant scope per specifications." },
+      "V-003": { factor: 0.92, warranty: "6 Months Warranty", note: "Lowest daily labour rate (RM130/day) and low civil repair quotes." },
+      "V-011": { factor: 1.02, warranty: "Nil Warranty", note: "Statutory licence lapsed on the compliance record. Cannot be awarded until renewed." }
+    };
+
+    function recalculateEstimates() {
+      const prelims = parseFloat(document.getElementById('estimator-prelims')?.value || 0) || 0;
+      const contingencyPct = parseFloat(document.getElementById('estimator-contingency')?.value || 0) || 0;
+      state.estimator.prelims = prelims;
+      state.estimator.contingencyPct = contingencyPct;
+
+      let baseBenchmark = 0;
+      state.estimator.items.forEach(it => { baseBenchmark += (it.qty * it.benchmark); });
+      const totalBenchmark = baseBenchmark + prelims + (baseBenchmark * (contingencyPct / 100));
+
+      const elBenchTotal = document.getElementById('estimator-benchmark-total');
+      if (elBenchTotal) {
+        elBenchTotal.textContent = `Astana Benchmark: RM ${totalBenchmark.toLocaleString('en-MY', { minimumFractionDigits: 2 })}`;
+      }
+
+      const cardsContainer = document.getElementById('estimator-cards-container');
+      if (!cardsContainer) return;
+
+      if (state.estimator.selectedVendors.length === 0) {
+        cardsContainer.innerHTML = `<div class="layer-panel" style="text-align: center; color: var(--on-surface-variant);">Please select at least one contractor from the checklist above to view comparison models.</div>`;
+        return;
+      }
+
+      let contractorCalculations = [];
+
+      state.estimator.selectedVendors.forEach(vId => {
+        const vendor = state.vendors.find(v => v.id === vId);
+        if (!vendor) return;
+
+        const profile = VENDOR_QUOTE_PROFILE[vendor.id] ||
+          { factor: 1.0, warranty: "1 Year", note: "No historical Astana tender pricing on record; benchmark rate applied." };
+
+        const comp = calculateCompliance(vendor);
+        const subtotal = baseBenchmark * profile.factor;
+        const contingencyAmt = subtotal * (contingencyPct / 100);
+        const grandTotal = subtotal + prelims + contingencyAmt;
+        const varianceFromBenchmark = totalBenchmark > 0
+          ? ((grandTotal - totalBenchmark) / totalBenchmark) * 100
+          : 0;
+
+        contractorCalculations.push({
+          vendor, comp, subtotal, prelims, contingencyAmt, grandTotal,
+          varianceFromBenchmark,
+          warrantyNote: profile.warranty,
+          specialNote: profile.note,
+          isCompliant: comp.status === 'COMPLIANT'
+        });
+      });
+
+      contractorCalculations.sort((a, b) => a.grandTotal - b.grandTotal);
+
+      const validTenders = contractorCalculations.filter(c => c.comp.status !== 'EXPIRED');
+      const recommendedWinner = validTenders.length > 0 ? validTenders[0] : contractorCalculations[0];
+
+      let cardsHtml = '';
+      contractorCalculations.forEach(calc => {
+        const isRec = recommendedWinner && calc.vendor.id === recommendedWinner.vendor.id;
+        const varianceStr = calc.varianceFromBenchmark <= 0
+          ? `<span style="color: var(--tertiary); font-weight: 600;">${calc.varianceFromBenchmark.toFixed(1)}% vs Benchmark (Savings)</span>`
+          : `<span style="color: var(--error); font-weight: 600;">+${calc.varianceFromBenchmark.toFixed(1)}% Above Benchmark</span>`;
+
+        cardsHtml += `
+          <div class="comparison-card ${isRec ? 'recommended' : ''}">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-sm); flex-wrap: wrap;">
+              <div>
+                ${isRec ? `<span class="rec-badge-flag">Management Office Recommended</span>` : ''}
+                <h4 class="comparison-contractor-name">${calc.vendor.name}</h4>
+                <div class="label-mono" style="font-size: 0.72rem; color: var(--on-surface-variant);">${calc.vendor.cidbGrade} &bull; ${calc.vendor.ssmNo}</div>
+              </div>
+              <span class="badge-pill ${calc.comp.badgeClass}">${calc.comp.label}</span>
+            </div>
+
+            <div class="comparison-price-large">RM ${calc.grandTotal.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</div>
+            <div style="font-size: 0.75rem; margin-bottom: var(--space-sm);">${varianceStr}</div>
+
+            <div style="background-color: var(--background); border: var(--rule); padding: var(--space-xs) var(--space-sm); margin-bottom: var(--space-sm);">
+              <div class="comparison-metric-row">
+                <span class="label-mono">Base Works Scope:</span>
+                <span class="label-mono">RM ${calc.subtotal.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div class="comparison-metric-row">
+                <span class="label-mono">Preliminaries &amp; Logistics:</span>
+                <span class="label-mono">RM ${calc.prelims.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div class="comparison-metric-row">
+                <span class="label-mono">Contingency (${contingencyPct}%):</span>
+                <span class="label-mono">RM ${calc.contingencyAmt.toLocaleString('en-MY', { minimumFractionDigits: 2 })}</span>
+              </div>
+              <div class="comparison-metric-row">
+                <span class="label-mono">Offered Warranty:</span>
+                <span style="font-weight: 600;">${calc.warrantyNote}</span>
+              </div>
+              <div class="comparison-metric-row">
+                <span class="label-mono">Payment Terms:</span>
+                <span>${calc.vendor.paymentTerms}</span>
+              </div>
+            </div>
+
+            <div style="font-size: 0.78rem; color: var(--on-surface-variant); line-height: 1.4;">
+              <strong>Tender Note:</strong> ${calc.specialNote}
+            </div>
+          </div>`;
+      });
+
+      cardsContainer.innerHTML = cardsHtml;
+
+      const memoBox = document.getElementById('memo-output-text');
+      if (memoBox && recommendedWinner) {
+        memoBox.textContent =
+`MEMORANDUM TO MANAGEMENT CORPORATION (MC) COUNCIL MEMBERS
+Perbadanan Pengurusan Astana Damansara
+Date: ${DATE_LONG}
+
+Subject: Tender Recommendation & Comparison for ${String(state.estimator.preset).replace(/_/g, ' ')} Works
+
+Dear Council Members,
+Enclosed herewith the comparative quotations and Schedule of Rates analysis for the above-captioned scope of work.
+
+Tender Evaluation Summary:
+1. Recommended Contractor: ${recommendedWinner.vendor.name} (${recommendedWinner.vendor.cidbGrade})
+2. Total Contract Sum Quoted: RM ${recommendedWinner.grandTotal.toLocaleString('en-MY', { minimumFractionDigits: 2 })} (Inclusive of Preliminaries & ${contingencyPct}% Contingency)
+3. Variance against Astana Damansara Schedule Benchmark: ${recommendedWinner.varianceFromBenchmark.toFixed(1)}%
+4. Warranty Coverage Provided: ${recommendedWinner.warrantyNote}
+5. Payment Terms: ${recommendedWinner.vendor.paymentTerms}
+6. Statutory Compliance: ${recommendedWinner.comp.label} (CIDB valid to ${recommendedWinner.vendor.cidbExpiry}, Insurance valid to ${recommendedWinner.vendor.insuranceExpiry})
+
+Recommendation Rationale:
+The Management Office proposes to award the contract to ${recommendedWinner.vendor.name} on the grounds of lowest compliant quotation meeting technical specifications, superior warranty duration, and proven track record at Astana Damansara.
+
+Kindly review and indicate your approval by reply email to the Management Office so the Purchase Order and Work Order may be prepared.
+
+Prepared by:
+Management Office
+PERBADANAN PENGURUSAN ASTANA DAMANSARA`;
+      }
+
+      refreshIcons();
+    }
+
+    function copyCouncilMemo() {
+      const memoText = document.getElementById('memo-output-text')?.textContent;
+      if (!memoText) return;
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(memoText)
+          .then(() => alert('MC Council Recommendation Memo copied to clipboard.'))
+          .catch(() => alert('Unable to copy automatically. Please select the memo text and copy manually.'));
+      } else {
+        alert('Clipboard access is unavailable here. Please select the memo text and copy manually.');
+      }
+    }
+
+    function quickQuoteForVendor(vendorId) {
+      if (!state.estimator.selectedVendors.includes(vendorId)) {
+        state.estimator.selectedVendors.push(vendorId);
+      }
+      switchTab('estimator');
+    }
+
+    /**
+     * CSV Export Functions
+     */
+    function csvCell(value) {
+      return `"${String(value ?? '').replace(/"/g, '""')}"`;
+    }
+
+    function exportVendorsCSV() {
+      const headers = ['ID', 'Company Name', 'Type', 'SSM Number', 'Trade', 'CIDB Grade', 'CIDB Expiry', 'MOF Status', 'Insurance Limit', 'Insurance Expiry', 'Astana Rating', 'Compliance Status'];
+      const rows = state.vendors.map(v => {
+        const comp = calculateCompliance(v);
+        return [v.id, v.name, v.companyType, v.ssmNo, v.trade, v.cidbGrade, v.cidbExpiry, v.mofStatus, v.policyLimit, v.insuranceExpiry, v.rating, comp.status].map(csvCell).join(',');
+      });
+      triggerDownload(headers.join(',') + '\n' + rows.join('\n'), 'text/csv;charset=utf-8', 'Astana_Damansara_Vendor_Roster_2026.csv');
+    }
+
+    function exportSorCSV() {
+      const headers = ['Item Code', 'Trade', 'Work Scope Specification', 'Unit', 'Min Rate (MYR)', 'Benchmark Rate (MYR)', 'Max Rate (MYR)', 'Reference'];
+      const rows = state.sor.map(s =>
+        [s.code, s.trade, s.desc, s.unit, s.minRate, s.benchmark, s.maxRate, s.reference].map(csvCell).join(',')
+      );
+      triggerDownload(headers.join(',') + '\n' + rows.join('\n'), 'text/csv;charset=utf-8', 'Astana_Damansara_Schedule_of_Rates.csv');
+    }
+
+    function triggerDownload(content, mimeType, filename) {
+      // BOM keeps Excel happy with the °/² characters in the specifications.
+      const blob = new Blob(['﻿' + content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    /**
+     * Application State Persistence (browser localStorage)
+     */
+    function saveApplicationState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          vendors: state.vendors,
+          sor: state.sor,
+          estimator: state.estimator
+        }));
+      } catch (err) {
+        console.warn('Unable to persist app state to localStorage:', err);
+      }
+    }
+
+    function loadApplicationState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        if (saved && Array.isArray(saved.vendors) && saved.vendors.length) state.vendors = saved.vendors;
+        if (saved && Array.isArray(saved.sor) && saved.sor.length) state.sor = saved.sor;
+        if (saved && saved.estimator && Array.isArray(saved.estimator.items)) state.estimator = saved.estimator;
+      } catch (err) {
+        console.warn('Could not load saved app state:', err);
+      }
+    }
+
+    function resetToAstanaDefaults() {
+      if (!confirm('Reset vendor directory and Schedule of Rates back to Astana Damansara verified baseline?')) return;
+
+      state.vendors = JSON.parse(JSON.stringify(BASELINE_VENDORS));
+      state.sor = JSON.parse(JSON.stringify(BASELINE_SOR));
+      state.estimator = {
+        preset: 'B4_ROOF',
+        items: JSON.parse(JSON.stringify(ESTIMATOR_PRESETS.B4_ROOF.items)),
+        contingencyPct: 5,
+        prelims: 1000,
+        selectedVendors: ['V-001', 'V-012', 'V-009']
+      };
+
+      saveApplicationState();
+      renderDashboard();
+      renderSorTable();
+      renderEstimator();
+      alert('Roster and Schedule of Rates successfully restored to Astana Damansara baseline.');
+    }
+
+    // Close the open drawer / modal with Escape.
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      closeVendorDrawer();
+      closeNoticeModal();
+      closeAddSorModal();
+    });
+
+    /**
+     * Application Initialization
+     */
+    /** Stamp the live date into every label and date default that referenced it. */
+    function applyDateLabels() {
+      const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+      set('hdr-system-date', `SYSTEM DATE: ${DATE_SHORT.toUpperCase()}`);
+      set('reg-verify-date', `Statutory Verification Against ${DATE_SHORT}`);
+      set('hint-system-date', `Current system date: ${DATE_SHORT}`);
+      set('footer-copyright', `© ${SYSTEM_YEAR} Perbadanan Pengurusan Astana Damansara`);
+
+      // Blank-form expiry defaults sit a sensible distance in the future.
+      const setDate = (id, iso) => { const el = document.getElementById(id); if (el && !el.value) el.value = iso; };
+      setDate('reg-ssm-expiry', isoMonthsAhead(12));
+      setDate('reg-cidb-expiry', isoMonthsAhead(12));
+      setDate('reg-mof-expiry', isoMonthsAhead(12));
+      setDate('reg-insurance-expiry', isoMonthsAhead(12));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadApplicationState();
+      applyDateLabels();
+
+      const elPrelims = document.getElementById('estimator-prelims');
+      if (elPrelims) elPrelims.value = state.estimator.prelims;
+      const elCont = document.getElementById('estimator-contingency');
+      if (elCont) elCont.value = state.estimator.contingencyPct;
+      const elPreset = document.getElementById('estimator-scenario-preset');
+      if (elPreset && state.estimator.preset) elPreset.value = state.estimator.preset;
+
+      renderDashboard();
+      renderSorTable();
+      renderEstimator();
+      refreshIcons();
+    });
+
+    // The icon library loads with `defer`, so draw icons once it is ready too.
+    window.addEventListener('load', refreshIcons);
+  </script>
+</body>
+</html>
